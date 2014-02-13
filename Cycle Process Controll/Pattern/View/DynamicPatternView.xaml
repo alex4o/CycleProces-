@@ -1,0 +1,70 @@
+﻿<Window x:Class="CycleProcessControll.DynaimPatternView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DynaimPatternView" Height="800" Width="1200">
+	<DockPanel LastChildFill="True">
+		<DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC">
+			<StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+				<Button Content="Назад" Style="{DynamicResource MenuButton}" Width="57" />
+				<Button Content="Добави" Style="{DynamicResource MenuButton}" Width="57" />
+				<Button Content="Запиши" Style="{DynamicResource MenuButton}" Width="57"/>
+				<Button Content="Нагоре" Style="{DynamicResource MenuButton}" Width="57"/>
+				<Button Content="Надолу" Style="{DynamicResource MenuButton}" Width="57"/>
+			</StackPanel>
+
+			<TextBlock DockPanel.Dock="Right" Text="{Binding TimeText, IsAsync=True, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>
+		</DockPanel>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="25*"/>
+				<ColumnDefinition Width="25*"/>
+				<ColumnDefinition Width="25*"/>
+				<ColumnDefinition Width="25*"/>
+			</Grid.ColumnDefinitions>
+
+			<StackPanel Grid.Column="0">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="24,5,24,0">
+					<Label Width="120" HorizontalContentAlignment="Center" Content="Начало:"/>
+					<TextBox Text="{Binding Start, Mode=TwoWay}" Width="150px"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="24,5,24,0" Width="269">
+					<Label Width="120" HorizontalContentAlignment="Center" Content="Брой повтаряния:"/>
+					<TextBox Text="{Binding Start, Mode=TwoWay}" Width="150px"/>
+				</StackPanel>
+
+			</StackPanel>
+			<StackPanel Grid.Column="1"/>
+
+			<StackPanel Grid.Column="2">
+				<TextBlock Foreground="#FF999999" FontWeight="Bold">Постоянни:</TextBlock>
+	
+				<TextBlock Foreground="#FF999999" FontWeight="Bold">Избран елемент:</TextBlock>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+					<Label Width="100" HorizontalContentAlignment="Center" Content="Име:"/>
+					<TextBox Text="{Binding Path=STitle, Mode=TwoWay}" Width="150px"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+					<Label Width="100" HorizontalContentAlignment="Center" Content="Продължителност:"/>
+					<TextBox Text="{Binding Path=SLenght, Mode=TwoWay}" Width="150px"/>
+				</StackPanel>
+			</StackPanel>
+			<ListBox x:Name="fl1" Grid.Column="3" ItemsSource="{Binding PaternList}" SelectedIndex="{Binding SIndex,Mode=TwoWay}" BorderBrush="{x:Null}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel>
+							<TextBlock Text="{Binding Type, Mode=TwoWay}"/>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock><Run Text="Продължителност:"/></TextBlock>
+								<TextBlock Text="{Binding Lenght, Mode=TwoWay}" Margin="5,0,0,0"/>
+
+							</StackPanel>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+
+
+		</Grid>
+	</DockPanel>
+</Window>

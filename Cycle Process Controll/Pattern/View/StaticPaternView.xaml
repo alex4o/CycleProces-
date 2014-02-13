@@ -1,0 +1,76 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CycleProcessControll" xmlns:View="clr-namespace:CycleProcessControll.Pattern.View" xmlns:ViewModel="clr-namespace:CycleProcessControll.Pattern.ViewModel" x:Class="CycleProcessControll.MainWindow"
+        Title="MainWindow"
+		Width="600px"
+		Height="800px">
+	<Window.DataContext>
+		<ViewModel:StaticPatternViweModel/>
+	</Window.DataContext>
+	<Grid>
+		<DockPanel LastChildFill="True">
+
+			<DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC">
+				<StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+					<Button Content="Запази" Style="{DynamicResource MenuButton}" Command="{Binding SaveFile}" Width="57"/>
+					<Button Content="Отвори" Style="{DynamicResource MenuButton}" Command="{Binding OpenFile}" Width="57"/>
+					<TextBox Width="220px" Text="{Binding SaveName}"/>
+				</StackPanel>
+
+				<TextBlock DockPanel.Dock="Right" Text="{Binding TimeText, IsAsync=True, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>
+			</DockPanel>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="25*"/>
+					<ColumnDefinition Width="25*"/>
+
+				</Grid.ColumnDefinitions>
+
+				<StackPanel Grid.Column="0">
+					<TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Постоянни:"/></TextBlock>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+						<Label Width="100" HorizontalContentAlignment="Center" Content="Начало:"/>
+						<TextBox Text="{Binding StartTime, Mode=TwoWay}" Width="150px"/>
+					</StackPanel>
+					<TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Избран елемент:"/></TextBlock>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+						<Label Width="100" HorizontalContentAlignment="Center" Content="Име:"/>
+						<TextBox Text="{Binding Current.Name, Mode=TwoWay}" Width="150px"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+						<Label Width="100" HorizontalContentAlignment="Center" Content="Продължителност:"/>
+						<TextBox Text="{Binding Current.Period, Mode=TwoWay}" Width="150px"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+						<Button Margin="5" Content="Добави" Command="{Binding AddCommand}"/>
+						<Button Margin="5" Content="Изтрий" Command="{Binding RemoveCommand}"/>
+						<Button Margin="5" Content="Обнови" Command="{Binding UpdateCommand}"/>
+						<Button Margin="5" Content="Нагоре" Command="{Binding MoveUpCommand}"/>
+						<Button Margin="5" Content="Надолу" Command="{Binding MoveDownCommand}"/>
+					</StackPanel>
+				</StackPanel>
+				<ListBox Grid.Column="1" ItemsSource="{Binding Patern, IsAsync=True}" SelectedItem="{Binding Current, IsAsync=False, Mode=OneWayToSource}" SelectedIndex="{Binding SelectedIndex, IsAsync=False, Mode=TwoWay}" BorderBrush="{x:Null}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock Text="{Binding Name, Mode=TwoWay}"/>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock><Run Text="Продължителност:"/></TextBlock>
+									<TextBlock Text="{Binding Period, Mode=TwoWay}" Margin="5,0,0,0"/>
+
+								</StackPanel>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+				<StackPanel Grid.Column="1"/>
+				<StackPanel Grid.Column="3"/>
+
+
+			</Grid>
+		</DockPanel>
+	</Grid>
+</Window>	
+
+
