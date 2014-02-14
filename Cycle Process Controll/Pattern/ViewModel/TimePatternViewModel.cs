@@ -58,14 +58,13 @@ namespace CycleProcessControll.Pattern.ViewModel
 					are.Set();
 				});
 				t.Start();
-				are.WaitOne();
 				pattern.Clear();
+				are.WaitOne();
+				
 				foreach (TimePeriodModel item in model.Patern)
 				{
 					pattern.Add(new TimePeriodViewModel(item));
 				}
-
-				NotifyPropertyChanged("");
 			}
 		}
 
