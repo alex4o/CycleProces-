@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace CycleProcessControll
 {
-	class Command : ICommand
+	public class Command : ICommand
 	{
 		Action Executable;
 

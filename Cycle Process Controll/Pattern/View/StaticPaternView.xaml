@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:CycleProcessControll" xmlns:View="clr-namespace:CycleProcessControll.Pattern.View" xmlns:ViewModel="clr-namespace:CycleProcessControll.Pattern.ViewModel" x:Class="CycleProcessControll.MainWindow"
-        Title="MainWindow"
+        Title="{Binding SaveName}"
 		Width="600px"
 		Height="800px">
 	<Window.DataContext>
@@ -14,8 +14,7 @@
 			<DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC">
 				<StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
 					<Button Content="Запази" Style="{DynamicResource MenuButton}" Command="{Binding SaveFile}" Width="57"/>
-					<Button Content="Отвори" Style="{DynamicResource MenuButton}" Command="{Binding OpenFile}" Width="57"/>
-					<TextBox Width="220px" Text="{Binding SaveName}"/>
+					
 				</StackPanel>
 
 				<TextBlock DockPanel.Dock="Right" Text="{Binding TimeText, IsAsync=True, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>

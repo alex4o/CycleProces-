@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CycleProcessControll.Model;
+using CycleProcessControll.Pattern.Model;
 using System.ComponentModel;
 namespace CycleProcessControll.Pattern.ViewModel
 {

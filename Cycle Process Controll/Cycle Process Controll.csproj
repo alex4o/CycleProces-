@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B624E6B5-EC33-469D-A04A-A0455F9E58A0}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CycleProcessControll</RootNamespace>
     <AssemblyName>CycleProcessControll</AssemblyName>
@@ -51,6 +51,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -78,7 +81,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
-    <Compile Include="Pattern\Repository\StaticPatternModel.cs" />
+    <Compile Include="Pattern\Model\SaveDataModel.cs" />
+    <Compile Include="Pattern\Model\StaticPatternModel.cs" />
     <Page Include="Pattern\View\StaticPaternView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -7,7 +7,8 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.IO;
-using CycleProcessControll.Model;
+using CycleProcessControll.Pattern.Model;
+using System.Threading;
 namespace CycleProcessControll.Pattern.ViewModel
 {
 	class StaticPatternViweModel : INotifyPropertyChanged
@@ -119,6 +120,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 			{
 				return new Command(() =>
 				{
+					
 					model.Patern.Clear();
 					foreach (TimePeriodViewModel item in patern)
 					{
@@ -127,32 +129,33 @@ namespace CycleProcessControll.Pattern.ViewModel
 					}
 
 					StreamWriter sw = new StreamWriter(@"Save\" + SaveName + ".json");
+					
 					sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(model));
 					sw.Flush();
 					sw.Dispose();
-
+					WeekViewModel.PatternUpdate(SaveName);
+					
 				});
 			}
 		}
 
-		public Command OpenFile
-		{
-			get
-			{
-				return new Command(() =>
-				{
-					StreamReader sr = new StreamReader(@"Save\" +  SaveName + ".json");
-					String Object = sr.ReadToEnd();
-					model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
-					Patern.Clear();
-					foreach (TimePeriodModel item in model.Patern)
-					{
-						patern.Add(new TimePeriodViewModel(item));
-					}
+		
 
-					NotifyPropertyChanged("");
-				});
+		public void FileOpen(String Name) {
+			this.SaveName = Name;
+
+				StreamReader sr = new StreamReader(@"Save\" + SaveName + ".json");
+				String Object = sr.ReadToEnd();
+				model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
+				
+			
+
+			Patern.Clear();
+			foreach (TimePeriodModel item in model.Patern)
+			{
+				patern.Add(new TimePeriodViewModel(item));
 			}
+			NotifyPropertyChanged("");
 		}
 
 		public TimePeriodViewModel Current

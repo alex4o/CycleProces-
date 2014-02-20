@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Plugin
 {
-public interface IDBManager
+	public interface IDBManager
     {
-		void Save(IEnumerable<CycleProcessControll.Model.TimePeriodModel> list);
+		void Save(IEnumerable<CycleProcessControll.Pattern.Model.TimePeriodModel> list);
 
     }
 }

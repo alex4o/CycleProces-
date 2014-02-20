@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CycleProcessControll.Model{
+namespace CycleProcessControll.Pattern.Model
+{
 	public class TimePeriodModel
 	{
 		public TimePeriodModel(String Name,TimeSpan Period)
