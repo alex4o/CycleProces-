@@ -16,14 +16,14 @@
 		</StackPanel>
 		
 		<ComboBox DockPanel.Dock="Bottom" Margin="5" SelectedItem="{Binding Path=SelectedFile,Mode=TwoWay}" ItemsSource="{Binding Path=Patterns}"/>
-		<ListBox Grid.Column="1" ItemsSource="{Binding Path=Pattern, IsAsync=True}" BorderBrush="{x:Null}">
+		<ListBox Grid.Column="1" ItemsSource="{Binding Path=Pattern}" BorderBrush="{x:Null}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel HorizontalAlignment="Center">
-						<TextBlock Text="{Binding Name, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+						<TextBlock Text="{Binding Name, Mode=OneWay}" HorizontalAlignment="Stretch"/>
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 							<TextBlock ><Run Text="Продължителност:"/></TextBlock>
-							<TextBlock Text="{Binding Period, Mode=TwoWay}" Margin="5,0,0,0" />
+							<TextBlock Text="{Binding Period, Mode=OneWay}" Margin="5,0,0,0" />
 
 						</StackPanel>
 					</StackPanel>

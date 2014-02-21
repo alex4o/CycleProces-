@@ -42,6 +42,17 @@
 						<TextBox Text="{Binding Current.Period, Mode=TwoWay}" Width="150px"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+						<Label Width="100" HorizontalContentAlignment="Center" Content="Сигнал:"/>
+						<ComboBox  Width="150px">
+							<ComboBoxItem>Само в началото</ComboBoxItem>
+							<ComboBoxItem>Само в края</ComboBoxItem>
+							<ComboBoxItem>През цялото време</ComboBoxItem>
+							<ComboBoxItem></ComboBoxItem>
+							<ComboBoxItem></ComboBoxItem>
+						</ComboBox>
+					</StackPanel>
+					
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
 						<Button Margin="5" Content="Добави" Command="{Binding AddCommand}"/>
 						<Button Margin="5" Content="Изтрий" Command="{Binding RemoveCommand}"/>
 						<Button Margin="5" Content="Обнови" Command="{Binding UpdateCommand}"/>

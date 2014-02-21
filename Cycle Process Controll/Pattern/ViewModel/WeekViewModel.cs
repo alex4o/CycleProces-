@@ -15,8 +15,8 @@ namespace CycleProcessControll.Pattern.ViewModel
 		ObservableCollection<string> files;
 		public static Dictionary<string, ObservableCollection<TimePeriodViewModel>> Loaded = new Dictionary<string, ObservableCollection<TimePeriodViewModel>>();
 		public static SaveDataModel[] save;
-		//Dictionary<string, Action> Events = new Dictionary<string,Action>();
-
+		Int32 CurrentDay;
+		Timer clock;
 
 		public Command Shit
 		{
@@ -32,7 +32,6 @@ namespace CycleProcessControll.Pattern.ViewModel
 		public WeekViewModel()
 		{
 			Load();
-			//TimeText = "12:20";
 			files = new ObservableCollection<string>(Directory.GetFiles(@"Save\").Select(item => item.Split('\\').Last().Split('.')[0]));
 
 			DateTime dt = DateTime.Today;
@@ -40,16 +39,15 @@ namespace CycleProcessControll.Pattern.ViewModel
 			week = week.Select(res =>
 			{
 				TimePatternViewModel v = new TimePatternViewModel(files, dt.ToString("dddd"), save[(int)dt.DayOfWeek]);
-				Console.WriteLine("{0}", dt.DayOfWeek);
+				//Console.WriteLine("{0}", dt.DayOfWeek);
 				dt = dt.AddDays(1);
 				return v;
 			}).ToArray();
-
-			Thread clock = new Thread(() => {
-				
+			Thread t = new Thread(() =>
+			{
+				clock = new Timer(TimerCallback, null, 0, 1000);
 			});
-			clock.Start();
-
+			t.Start();
 			PatternUpdatedEvent += WeekViewModel_PatternUpdatedEvent;
 		}
 
@@ -78,7 +76,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 			{
 				sw.Write(JsonConvert.SerializeObject(save));
 				sw.Flush();
-				sw.Dispose();
+				//sw.Dispose();
 			}
 
 		}
@@ -105,6 +103,11 @@ namespace CycleProcessControll.Pattern.ViewModel
 			Loaded.ElementAt(0).Value.Clear();
 		}
 
+		void TimerCallback(Object state) {
+			TimeText = DateTime.Now.ToString("hh:mm:ss");
+			NotifyPropertyChanged("TimeText");
+		}
+
 		public TimePatternViewModel[] Week
 		{
 			get
@@ -112,6 +115,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 				return week;
 			}
 		}
+
 
 		public String TimeText
 		{
