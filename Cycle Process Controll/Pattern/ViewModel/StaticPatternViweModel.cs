@@ -21,6 +21,8 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 		}
 
+
+
 		public String SaveName
 		{
 			get;
@@ -120,7 +122,6 @@ namespace CycleProcessControll.Pattern.ViewModel
 			{
 				return new Command(() =>
 				{
-					
 					model.Patern.Clear();
 					foreach (TimePeriodViewModel item in patern)
 					{
@@ -142,12 +143,21 @@ namespace CycleProcessControll.Pattern.ViewModel
 		
 
 		public void FileOpen(String Name) {
+			if (Name == null)
+			{
+				return;
+			}
 			this.SaveName = Name;
 
-				StreamReader sr = new StreamReader(@"Save\" + SaveName + ".json");
-				String Object = sr.ReadToEnd();
-				model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
-				
+			StreamReader sr = new StreamReader(@"Save\" + SaveName + ".json");
+			String Object = sr.ReadToEnd();
+			StaticPatternModel tmodel = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
+			if (tmodel == null)
+			{
+				NotifyPropertyChanged("");
+				return;
+			}
+			model = tmodel;
 			
 
 			Patern.Clear();

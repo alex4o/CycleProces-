@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CycleProcessControll.Pattern.Model
 {
-	public class TimePeriodModel
+	public struct TimePeriodModel
 	{
 		public TimePeriodModel(String Name,TimeSpan Period)
 		{
@@ -16,5 +16,6 @@ namespace CycleProcessControll.Pattern.Model
 
 		public String Name;
 		public TimeSpan Period;
+		//public int portval = 0;
 	}
 }

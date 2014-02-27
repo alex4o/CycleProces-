@@ -14,18 +14,24 @@ namespace CycleProcessControll.Pattern.ViewModel
 	{
 		ObservableCollection<string> patterns;
 		ObservableCollection<TimePeriodViewModel> pattern;
-		Dictionary<string, Action> Events;
 		SaveDataModel savedata;
+		WeekViewModel MainViewModel;
 		//public string selectedfile;
-		public TimePatternViewModel(ObservableCollection<string> p, String Day, SaveDataModel savedata)
+		public TimePatternViewModel(ObservableCollection<string> p, String Day, SaveDataModel savedata, WeekViewModel week)
 		{
 			patterns = p;
 			this.Day = Day;
 			this.savedata = savedata;
-			if (savedata.Name != null || savedata.Name != "") {
+			if (savedata.Name != null && savedata.Name != "") {
 				Load(savedata.Name);
 			}
-			//this.Events = Events;
+			else
+			{
+				pattern = new ObservableCollection<TimePeriodViewModel>();
+			}
+			MainViewModel = week;
+
+			
 		}
 
 		public ObservableCollection<TimePeriodViewModel> Pattern
@@ -49,7 +55,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 		public Command Edit{
 			get {
 				return new Command(() => {
-					CycleProcessControll.MainWindow StaticView = new MainWindow();
+					CycleProcessControll.Pattern.View.MainWindow StaticView = new CycleProcessControll.Pattern.View.MainWindow();
 					(StaticView.DataContext as CycleProcessControll.Pattern.ViewModel.StaticPatternViweModel).FileOpen(savedata.Name);
 					StaticView.Show();
 					
@@ -79,19 +85,21 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 
 			StaticPatternModel model = new StaticPatternModel();
-
+		
 			using (StreamReader sr = new StreamReader(@"Save\" + Name + ".json"))
 			{
 				String Object = sr.ReadToEnd();
 				model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
 			}
-
+			TimeSpan StartTime = model.StartTime;
 			if (pattern == null) Pattern = new ObservableCollection<TimePeriodViewModel>();
 			pattern.Clear();
-
+			
 			foreach (TimePeriodModel item in model.Patern)
 			{
-				pattern.Add(new TimePeriodViewModel(item));
+				StartTime += item.Period;
+
+				pattern.Add(new TimePeriodViewModel(new TimePeriodModel(item.Name,StartTime)));
 			}
 			
 			WeekViewModel.Loaded.Add(Name, pattern);
@@ -108,13 +116,14 @@ namespace CycleProcessControll.Pattern.ViewModel
 					return;
 				}
 				savedata.Name = value;
-				WeekViewModel.Save();
+				MainViewModel.Save();
 				Load(value);		
-				NotifyPropertyChanged("SelectedFile");
+				//NotifyPropertyChanged("SelectedFile");
 			}
 			get{
 				return savedata.Name;
 			}
+			
 		}
 		#region PropertyChanged
 		public event PropertyChangedEventHandler PropertyChanged;

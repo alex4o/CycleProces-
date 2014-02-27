@@ -19,10 +19,10 @@
 		<ListBox Grid.Column="1" ItemsSource="{Binding Path=Pattern}" BorderBrush="{x:Null}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<StackPanel HorizontalAlignment="Center">
+					<StackPanel HorizontalAlignment="Stretch">
 						<TextBlock Text="{Binding Name, Mode=OneWay}" HorizontalAlignment="Stretch"/>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<TextBlock ><Run Text="Продължителност:"/></TextBlock>
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+							<TextBlock Text="Край:" ></TextBlock>
 							<TextBlock Text="{Binding Period, Mode=OneWay}" Margin="5,0,0,0" />
 
 						</StackPanel>
