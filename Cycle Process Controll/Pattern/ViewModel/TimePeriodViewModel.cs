@@ -41,6 +41,30 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 		}
 
+		public Time EventStartTime {
+			get
+			{
+				return (Time)_period.EventStartTime;
+			}
+			set
+			{
+				_period.EventStartTime = (int)value;
+				NotifyPropertyChanged("EventStartTime");
+			}
+		}
+
+		public byte EventValue
+		{
+			get
+			{
+				return _period.EventVal;
+			}
+			set
+			{
+				_period.EventVal = value;
+				NotifyPropertyChanged("EventValue");
+			}
+		}
 		#endregion
 
 		#region PropertyChanged

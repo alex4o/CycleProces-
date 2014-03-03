@@ -99,7 +99,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 			{
 				StartTime += item.Period;
 
-				pattern.Add(new TimePeriodViewModel(new TimePeriodModel(item.Name,StartTime)));
+				pattern.Add(new TimePeriodViewModel(new TimePeriodModel(item.Name,StartTime,item.EventStartTime,item.EventVal)));
 			}
 			
 			WeekViewModel.Loaded.Add(Name, pattern);

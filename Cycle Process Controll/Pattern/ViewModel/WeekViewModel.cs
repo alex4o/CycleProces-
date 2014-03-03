@@ -1,12 +1,14 @@
 ﻿using CycleProcessControll.Pattern.Model;
 using Newtonsoft.Json;
 using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 using System.IO;
 using System.Linq;
+using LPT;
 namespace CycleProcessControll.Pattern.ViewModel
 {
 	class WeekViewModel : INotifyPropertyChanged
@@ -127,7 +129,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 			foreach (TimePeriodModel item in model.Patern)
 			{
 				model.StartTime += item.Period;
-				Pattern.Add(new TimePeriodViewModel(new TimePeriodModel(item.Name, model.StartTime)));
+				Pattern.Add(new TimePeriodViewModel(new TimePeriodModel(item.Name, model.StartTime,0,0)));
 			}
 			Console.Write("Pattern Updated: {0}\r", Name);
 		}
@@ -150,15 +152,54 @@ namespace CycleProcessControll.Pattern.ViewModel
 			Loaded.ElementAt(0).Value.Clear();
 		}
 
+		TimePeriodViewModel model = null;
+		TimeSpan Start;
 		void TimerCallback(Object state)
 		{
-			TimePeriodViewModel model = null;
-			TimeText = DateTime.Now.ToString("hh:mm:ss");
+			
+			TimeText = DateTime.Now.ToString("HH:mm:ss");
 			for (int i = CurrentHour; i < Week[0].Pattern.Count; i++)
 			{
 				if (Week[0].Pattern[i]._period.Period >= DateTime.Now.TimeOfDay)
 				{
-					model = Week[0].Pattern[i];
+					if (model == Week[0].Pattern[i])
+					{
+						if((int)(Week[0].Pattern[i]._period.Period - DateTime.Now.TimeOfDay).TotalSeconds == 30){
+							//30 seconds to end
+							if (model.EventStartTime == Time.End)
+							{
+								LPT.LPT.On(model.EventValue);
+							}
+
+							//MessageBox.Show("30 seconds to mars");
+						}
+					}
+					else
+					{
+						LPT.LPT.Off();
+						if (model != null)
+						{
+							Start = model._period.Period;
+						}
+						
+						model = Week[0].Pattern[i];
+						MessageBox.Show("Enter Event");
+						if ((int)(DateTime.Now.TimeOfDay - Start).TotalSeconds == 30)
+						{
+							//30 seconds from start
+							if(model.EventStartTime == Time.Start){
+								LPT.LPT.Off();
+							}
+						}
+						else {
+							if (model.EventStartTime == Time.Start || model.EventStartTime == Time.All) 
+							{
+								LPT.LPT.On(model.EventValue);
+							}
+							//all the time
+						}
+						
+					}
 					CurrentHour = i;
 					break;
 				}

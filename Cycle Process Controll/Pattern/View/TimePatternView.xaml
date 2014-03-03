@@ -7,18 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="200">
 	<DockPanel>
-		<!--<DockPanel.DataContext>
-			<ViewModel:TimePatternViewModel/>
-		</DockPanel.DataContext>-->
 		<TextBlock DockPanel.Dock="Top" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="{Binding Path=Day}" /></TextBlock>
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
 			<Button Width="50px" Command="{Binding Path=Edit}">Edit</Button>
+			<ComboBox SelectedItem="{Binding Path=SelectedFile,Mode=TwoWay}" ItemsSource="{Binding Path=Patterns}"/>
 		</StackPanel>
 		
-		<ComboBox DockPanel.Dock="Bottom" Margin="5" SelectedItem="{Binding Path=SelectedFile,Mode=TwoWay}" ItemsSource="{Binding Path=Patterns}"/>
+		
 		<ListBox Grid.Column="1" ItemsSource="{Binding Path=Pattern}" BorderBrush="{x:Null}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
+					
 					<StackPanel HorizontalAlignment="Stretch">
 						<TextBlock Text="{Binding Name, Mode=OneWay}" HorizontalAlignment="Stretch"/>
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -27,6 +26,7 @@
 
 						</StackPanel>
 					</StackPanel>
+				
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>

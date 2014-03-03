@@ -91,6 +91,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ComboBoxItems.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CreatePatternDialog.cs">
       <SubType>Form</SubType>
@@ -98,6 +99,7 @@
     <Compile Include="CreatePatternDialog.Designer.cs">
       <DependentUpon>CreatePatternDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums.cs" />
     <Compile Include="Pattern\Model\SaveDataModel.cs" />
     <Compile Include="Pattern\Model\StaticPatternModel.cs" />
     <Page Include="Pattern\View\StaticPaternView.xaml">
@@ -173,6 +175,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LPT\LPT.csproj">
+      <Project>{354b414d-3544-4446-9e09-71976b298eb9}</Project>
+      <Name>LPT</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{7fbc92c1-7165-48c6-b051-84f68b3c12c2}</Project>
       <Name>Model</Name>
