@@ -21,7 +21,6 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 		}
 
-
 		public String SaveName
 		{
 			get;
@@ -64,7 +63,11 @@ namespace CycleProcessControll.Pattern.ViewModel
 			{
 				return new Command(() =>
 				{
-					patern[SelectedIndex]._period = current._period;
+					patern[SelectedIndex].Name = current.Name;
+					patern[SelectedIndex].Period = current.Period;
+					patern[SelectedIndex].EventStartTime = current.EventStartTime;
+					patern[SelectedIndex].EventValue = current.EventValue;
+
 				});
 			}
 		}
@@ -110,6 +113,17 @@ namespace CycleProcessControll.Pattern.ViewModel
 						return;
 					}
 					patern.Move(SelectedIndex, SelectedIndex + 1);
+				});
+			}
+		}
+		public Command RemoveFile
+		{
+			get
+			{
+				return new Command(() =>
+				{
+					File.Delete(@"Save\" + SaveName + ".json");
+					WeekViewModel.PatternUpdate(SaveName);
 				});
 			}
 		}

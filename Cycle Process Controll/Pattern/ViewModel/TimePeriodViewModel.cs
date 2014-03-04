@@ -69,7 +69,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 		#region PropertyChanged
 		public event PropertyChangedEventHandler PropertyChanged;
-		private void NotifyPropertyChanged(string str)
+		public void NotifyPropertyChanged(string str)
 		{
 			if (PropertyChanged != null)
 			{
@@ -77,5 +77,43 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 		}
 		#endregion
+	}
+
+	class PreviewPeriodViewModel : TimePeriodViewModel
+	{
+
+		public TimeSpan start;
+		public TimeSpan end;
+
+		public PreviewPeriodViewModel(TimePeriodModel period, TimeSpan start, TimeSpan end) : base(period)
+		{
+			this.start = start;
+			this.end = end;
+		}
+		public String Start
+		{
+			get
+			{
+				return start.ToString(@"hh\:mm");
+			}
+			set
+			{
+				start = TimeSpan.Parse(value);
+				NotifyPropertyChanged("Start");
+			}
+		}
+
+		public String End
+		{
+			get
+			{
+				return end.ToString(@"hh\:mm");
+			}
+			set
+			{
+				end = TimeSpan.Parse(value);
+				NotifyPropertyChanged("End");
+			}
+		}
 	}
 }

@@ -15,7 +15,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 	{
 		TimePatternViewModel[] week = new TimePatternViewModel[7];
 		ObservableCollection<string> files;
-		public static Dictionary<string, ObservableCollection<TimePeriodViewModel>> Loaded = new Dictionary<string, ObservableCollection<TimePeriodViewModel>>();
+		public static Dictionary<string, ObservableCollection<PreviewPeriodViewModel>> Loaded = new Dictionary<string, ObservableCollection<PreviewPeriodViewModel>>();
 		public static SaveDataModel[] save;
 		Int32 CurrentHour = 0;
 		Timer clock;
@@ -115,21 +115,24 @@ namespace CycleProcessControll.Pattern.ViewModel
 				String Object = sr.ReadToEnd();
 				model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
 			}
-			ObservableCollection<TimePeriodViewModel> Pattern;
+			ObservableCollection<PreviewPeriodViewModel> Pattern;
 			if (Loaded.ContainsKey(Name))
 			{
 				Pattern = Loaded[Name];
 			}
 			else
 			{
-				Pattern = new ObservableCollection<TimePeriodViewModel>();
+				Pattern = new ObservableCollection<PreviewPeriodViewModel>();
 				Loaded.Add(Name,Pattern);
 			}
+			
+			TimeSpan EndTime = model.StartTime;
 			Pattern.Clear();
 			foreach (TimePeriodModel item in model.Patern)
 			{
-				model.StartTime += item.Period;
-				Pattern.Add(new TimePeriodViewModel(new TimePeriodModel(item.Name, model.StartTime,0,0)));
+				model.StartTime = EndTime ;
+				EndTime += item.Period;
+				Pattern.Add(new PreviewPeriodViewModel(item, model.StartTime, EndTime));
 			}
 			Console.Write("Pattern Updated: {0}\r", Name);
 		}
@@ -152,54 +155,56 @@ namespace CycleProcessControll.Pattern.ViewModel
 			Loaded.ElementAt(0).Value.Clear();
 		}
 
-		TimePeriodViewModel model = null;
-		TimeSpan Start;
+		PreviewPeriodViewModel model = null;
+		//TimeSpan Start;
 		void TimerCallback(Object state)
 		{
 			
 			TimeText = DateTime.Now.ToString("HH:mm:ss");
-			for (int i = CurrentHour; i < Week[0].Pattern.Count; i++)
+			for (int i = CurrentHour;i < Week[0].Pattern.Count;i++)
 			{
-				if (Week[0].Pattern[i]._period.Period >= DateTime.Now.TimeOfDay)
+				if (Week[0].Pattern[i].end >= DateTime.Now.TimeOfDay && Week[0].Pattern[i].start <= DateTime.Now.TimeOfDay)
 				{
 					if (model == Week[0].Pattern[i])
 					{
-						if((int)(Week[0].Pattern[i]._period.Period - DateTime.Now.TimeOfDay).TotalSeconds == 30){
+						if ((int)(DateTime.Now.TimeOfDay - model.start).TotalSeconds == 30)
+						{
+							//30 seconds from start
+							if(model.EventStartTime == Time.Start){
+								LPT.LPT.Off();
+								
+							}
+							Console.WriteLine("End Short");
+						}
+						
+						//Console.WriteLine((int)(model._period.Period - DateTime.Now.TimeOfDay).TotalSeconds);
+						if ((int)(model.end - DateTime.Now.TimeOfDay).TotalSeconds == 30)
+						{
 							//30 seconds to end
 							if (model.EventStartTime == Time.End)
 							{
 								LPT.LPT.On(model.EventValue);
 							}
 
-							//MessageBox.Show("30 seconds to mars");
+							Console.WriteLine("30 seconds to mars");
 						}
 					}
 					else
 					{
 						LPT.LPT.Off();
-						if (model != null)
-						{
-							Start = model._period.Period;
-						}
-						
 						model = Week[0].Pattern[i];
-						MessageBox.Show("Enter Event");
-						if ((int)(DateTime.Now.TimeOfDay - Start).TotalSeconds == 30)
-						{
-							//30 seconds from start
-							if(model.EventStartTime == Time.Start){
-								LPT.LPT.Off();
-							}
-						}
-						else {
-							if (model.EventStartTime == Time.Start || model.EventStartTime == Time.All) 
-							{
-								LPT.LPT.On(model.EventValue);
-							}
-							//all the time
-						}
+						Console.WriteLine("Enter Period");
 						
+						
+						if (model.EventStartTime == Time.Start || model.EventStartTime == Time.All) 
+						{
+							LPT.LPT.On(model.EventValue);
+						}
+						Console.WriteLine("Enter Event");
+						//all the time
 					}
+
+					
 					CurrentHour = i;
 					break;
 				}
@@ -207,7 +212,9 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 			if (model != null)
 			{
+
 				PatternName = model.Name;
+				//model = null;
 			}
 			else
 			{

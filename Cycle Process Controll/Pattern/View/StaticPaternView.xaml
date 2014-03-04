@@ -23,7 +23,7 @@
 			<DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC">
 				<StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
 					<Button Content="Запази" Style="{DynamicResource MenuButton}" Command="{Binding SaveFile}" Width="57"/>
-					
+					<Button Content="Изтрий" Style="{DynamicResource MenuButton}" Command="{Binding RemoveFile}" Width="57"/>
 				</StackPanel>
 
 				<TextBlock DockPanel.Dock="Right" Text="{Binding TimeText, IsAsync=True, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>

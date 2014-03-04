@@ -13,7 +13,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 	class TimePatternViewModel : INotifyPropertyChanged
 	{
 		ObservableCollection<string> patterns;
-		ObservableCollection<TimePeriodViewModel> pattern;
+		ObservableCollection<PreviewPeriodViewModel> pattern;
 		SaveDataModel savedata;
 		WeekViewModel MainViewModel;
 		//public string selectedfile;
@@ -27,14 +27,14 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 			else
 			{
-				pattern = new ObservableCollection<TimePeriodViewModel>();
+				pattern = new ObservableCollection<PreviewPeriodViewModel>();
 			}
 			MainViewModel = week;
 
 			
 		}
 
-		public ObservableCollection<TimePeriodViewModel> Pattern
+		public ObservableCollection<PreviewPeriodViewModel> Pattern
 		{
 			get
 			{
@@ -92,14 +92,15 @@ namespace CycleProcessControll.Pattern.ViewModel
 				model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
 			}
 			TimeSpan StartTime = model.StartTime;
-			if (pattern == null) Pattern = new ObservableCollection<TimePeriodViewModel>();
+			Pattern = new ObservableCollection<PreviewPeriodViewModel>();
 			pattern.Clear();
 			
 			foreach (TimePeriodModel item in model.Patern)
 			{
+				model.StartTime = StartTime;
 				StartTime += item.Period;
 
-				pattern.Add(new TimePeriodViewModel(new TimePeriodModel(item.Name,StartTime,item.EventStartTime,item.EventVal)));
+				pattern.Add(new PreviewPeriodViewModel(item, model.StartTime,StartTime));
 			}
 			
 			WeekViewModel.Loaded.Add(Name, pattern);

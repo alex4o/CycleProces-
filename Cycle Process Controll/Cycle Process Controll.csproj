@@ -101,7 +101,6 @@
     </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="Pattern\Model\SaveDataModel.cs" />
-    <Compile Include="Pattern\Model\StaticPatternModel.cs" />
     <Page Include="Pattern\View\StaticPaternView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

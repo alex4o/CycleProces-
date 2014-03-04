@@ -15,15 +15,38 @@ namespace LPT
 		[DllImport("inpout32.dll", EntryPoint = "Inp32")]
 		private static extern short Inp(short addr);
 
+		[DllImport("inpoutx64.dll", EntryPoint = "Out32")]
+		private static extern void Out64(short addr, short val);
+
+		[DllImport("inpoutx64.dll", EntryPoint = "Inp32")]
+		private static extern short Inp64(short addr);
+
 		public static void On(byte value) {
-			Out(0x278, value);
-			Out(0x378, value);
-			Out(0x38C, value);
+			try
+			{
+				Out(0x278, value);
+				Out(0x378, value);
+				Out(0x38C, value);
+			}
+			catch(BadImageFormatException ex){
+				Out64(0x278, value);
+				Out64(0x378, value);
+				Out64(0x38C, value);
+			}
 		}
 		public static void Off() {
-			Out(0x278, 0);
-			Out(0x378, 0);
-			Out(0x38C, 0);
+			try
+			{
+				Out64(0x278, 0);
+				Out64(0x378, 0);
+				Out64(0x38C, 0);
+			}
+			catch (BadImageFormatException ex)
+			{
+				Out64(0x278, 0);
+				Out64(0x378, 0);
+				Out64(0x38C, 0);
+			}
 		}
     }
 }

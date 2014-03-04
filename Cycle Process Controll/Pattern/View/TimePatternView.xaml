@@ -9,7 +9,7 @@
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="{Binding Path=Day}" /></TextBlock>
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-			<Button Width="50px" Command="{Binding Path=Edit}">Edit</Button>
+			<Button Width="70px" Command="{Binding Path=Edit}">Редактирай</Button>
 			<ComboBox SelectedItem="{Binding Path=SelectedFile,Mode=TwoWay}" ItemsSource="{Binding Path=Patterns}"/>
 		</StackPanel>
 		
@@ -21,9 +21,10 @@
 					<StackPanel HorizontalAlignment="Stretch">
 						<TextBlock Text="{Binding Name, Mode=OneWay}" HorizontalAlignment="Stretch"/>
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-							<TextBlock Text="Край:" ></TextBlock>
-							<TextBlock Text="{Binding Period, Mode=OneWay}" Margin="5,0,0,0" />
-
+							<TextBlock Text="Начало:" ></TextBlock>
+							<TextBlock Text="{Binding Path=Start, Mode=OneWay}" Margin="5,0,0,0" />
+							<TextBlock Text=" Край:" ></TextBlock>
+							<TextBlock Text="{Binding Path=End, Mode=OneWay}" Margin="5,0,0,0" />
 						</StackPanel>
 					</StackPanel>
 				

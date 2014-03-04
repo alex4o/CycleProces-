@@ -9,7 +9,7 @@ namespace CycleProcessControll
 {
 	public class ComboBoxTimeItem : ComboBoxItem
 	{
-		public static readonly DependencyProperty Value = DependencyProperty.Register("EventStartTime", typeof(Time), typeof(ComboBoxItem));
+		public static readonly DependencyProperty Value = DependencyProperty.Register("EventStartTime", typeof(Time), typeof(ComboBoxTimeItem));
 		public Time EventStartTime
 		{
 			get { return (Time)GetValue(Value); }
