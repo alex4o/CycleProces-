@@ -14,10 +14,10 @@ namespace CycleProcessControll.Pattern.ViewModel
 	class WeekViewModel : INotifyPropertyChanged
 	{
 		TimePatternViewModel[] week = new TimePatternViewModel[7];
-		ObservableCollection<string> files;
+		public static ObservableCollection<string> files;
 		public static Dictionary<string, ObservableCollection<PreviewPeriodViewModel>> Loaded = new Dictionary<string, ObservableCollection<PreviewPeriodViewModel>>();
 		public static SaveDataModel[] save;
-		Int32 CurrentHour = 0;
+		static Int32 CurrentHour = 0;
 		Timer clock;
 
 		public Command Shit
@@ -55,7 +55,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 			week = week.Select(res =>
 			{
-				TimePatternViewModel v = new TimePatternViewModel(files, dt.ToString("dddd"), save[(int)dt.DayOfWeek], this);dt = dt.AddDays(1);
+				TimePatternViewModel v = new TimePatternViewModel(dt.ToString("dddd"), save[(int)dt.DayOfWeek], this);dt = dt.AddDays(1);
 				return v;
 			}).ToArray();
 			Thread t = new Thread(() =>
@@ -64,6 +64,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 			});
 			t.Start();
 			PatternUpdatedEvent += WeekViewModel_PatternUpdatedEvent;
+			PatternRemovedEvent += WeekViewModel_PatternRemovedEvent;
 		}
 
 		public void Load()
@@ -109,6 +110,8 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 		void WeekViewModel_PatternUpdatedEvent(string Name)
 		{
+			
+			CurrentHour = 0;
 			StaticPatternModel model = new StaticPatternModel();
 			using (StreamReader sr = new StreamReader(@"Save\" + Name + ".json"))
 			{
@@ -123,18 +126,23 @@ namespace CycleProcessControll.Pattern.ViewModel
 			else
 			{
 				Pattern = new ObservableCollection<PreviewPeriodViewModel>();
-				Loaded.Add(Name,Pattern);
+				Loaded.Add(Name, Pattern);
 			}
-			
+
 			TimeSpan EndTime = model.StartTime;
 			Pattern.Clear();
 			foreach (TimePeriodModel item in model.Patern)
 			{
-				model.StartTime = EndTime ;
+				model.StartTime = EndTime;
 				EndTime += item.Period;
 				Pattern.Add(new PreviewPeriodViewModel(item, model.StartTime, EndTime));
 			}
 			Console.Write("Pattern Updated: {0}\r", Name);
+		}
+
+		void WeekViewModel_PatternRemovedEvent(string Name)
+		{
+			files.Remove(Name);
 		}
 
 		void LoadWeek()
@@ -143,7 +151,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 			Week = week.Select(res =>
 			{
-				TimePatternViewModel v = new TimePatternViewModel(files, dt.ToString("dddd"), save[(int)dt.DayOfWeek], this);
+				TimePatternViewModel v = new TimePatternViewModel(dt.ToString("dddd"), save[(int)dt.DayOfWeek], this);
 				Console.WriteLine("{0}", dt.DayOfWeek);
 				dt = dt.AddDays(1);
 				return v;
@@ -161,6 +169,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 		{
 			
 			TimeText = DateTime.Now.ToString("HH:mm:ss");
+			NotifyPropertyChanged("TimeText");
 			for (int i = CurrentHour;i < Week[0].Pattern.Count;i++)
 			{
 				if (Week[0].Pattern[i].end >= DateTime.Now.TimeOfDay && Week[0].Pattern[i].start <= DateTime.Now.TimeOfDay)
@@ -203,8 +212,11 @@ namespace CycleProcessControll.Pattern.ViewModel
 						Console.WriteLine("Enter Event");
 						//all the time
 					}
+					if ( CurrentHour != i && CurrentHour > Week[0].Pattern.Count - 1) {
+						PatternName = "";
+						LPT.LPT.Off();
+					}
 
-					
 					CurrentHour = i;
 					break;
 				}
@@ -221,8 +233,9 @@ namespace CycleProcessControll.Pattern.ViewModel
 				PatternName = "";
 			}
 			NotifyPropertyChanged("PatternName");
-			NotifyPropertyChanged("TimeText");
-			if (DateTime.Now.TimeOfDay == new TimeSpan(0,0,0))
+
+			//Console.WriteLine((long)(DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond));
+			if ((DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond) == 0)
 			{
 				LoadWeek();
 			}
@@ -257,9 +270,19 @@ namespace CycleProcessControll.Pattern.ViewModel
 		public delegate void PatternUpdated(String Name);
 		public static event PatternUpdated PatternUpdatedEvent;
 
+		public delegate void PatternRemoved(String Name);
+		public static event PatternRemoved PatternRemovedEvent;
+
 		public static void PatternUpdate(String name)
 		{
 			var handler = PatternUpdatedEvent;
+			if (handler != null)
+				handler(name);
+		}
+
+		public static void PatternRemove(String name)
+		{
+			var handler = PatternRemovedEvent;
 			if (handler != null)
 				handler(name);
 		}

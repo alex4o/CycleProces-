@@ -43,9 +43,9 @@ namespace LPT
 			}
 			catch (BadImageFormatException ex)
 			{
-				Out64(0x278, 0);
-				Out64(0x378, 0);
-				Out64(0x38C, 0);
+				Out(0x278, 0);
+				Out(0x378, 0);
+				Out(0x38C, 0);
 			}
 		}
     }

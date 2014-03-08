@@ -12,14 +12,14 @@ namespace CycleProcessControll.Pattern.ViewModel
 {
 	class TimePatternViewModel : INotifyPropertyChanged
 	{
-		ObservableCollection<string> patterns;
+		//ObservableCollection<string> patterns;
 		ObservableCollection<PreviewPeriodViewModel> pattern;
 		SaveDataModel savedata;
 		WeekViewModel MainViewModel;
 		//public string selectedfile;
-		public TimePatternViewModel(ObservableCollection<string> p, String Day, SaveDataModel savedata, WeekViewModel week)
+		public TimePatternViewModel(String Day, SaveDataModel savedata, WeekViewModel week)
 		{
-			patterns = p;
+			//patterns = p;
 			this.Day = Day;
 			this.savedata = savedata;
 			if (savedata.Name != null && savedata.Name != "") {
@@ -66,12 +66,12 @@ namespace CycleProcessControll.Pattern.ViewModel
 		{
 			get
 			{
-				return patterns;
+				return WeekViewModel.files;
 			}
 
 			set
 			{
-				patterns = value;
+				WeekViewModel.files = value;
 				
 			}
 		}
@@ -85,11 +85,21 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 
 			StaticPatternModel model = new StaticPatternModel();
-		
-			using (StreamReader sr = new StreamReader(@"Save\" + Name + ".json"))
-			{
-				String Object = sr.ReadToEnd();
-				model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
+			if (File.Exists(@"Save\" + Name + ".json")) {
+				
+			
+			
+				using (StreamReader sr = new StreamReader(@"Save\" + Name + ".json"))
+				{
+					String Object = sr.ReadToEnd();
+					model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
+				}
+			
+			}
+			if (model == null) {
+				Pattern = new ObservableCollection<PreviewPeriodViewModel>();
+				WeekViewModel.Loaded.Add(Name, Pattern);
+				return;
 			}
 			TimeSpan StartTime = model.StartTime;
 			Pattern = new ObservableCollection<PreviewPeriodViewModel>();
@@ -112,10 +122,13 @@ namespace CycleProcessControll.Pattern.ViewModel
 		{
 			set
 			{
+
 				if (value == null)
 				{
 					return;
 				}
+
+				
 				savedata.Name = value;
 				MainViewModel.Save();
 				Load(value);		

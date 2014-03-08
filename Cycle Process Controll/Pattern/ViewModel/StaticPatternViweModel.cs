@@ -123,7 +123,8 @@ namespace CycleProcessControll.Pattern.ViewModel
 				return new Command(() =>
 				{
 					File.Delete(@"Save\" + SaveName + ".json");
-					WeekViewModel.PatternUpdate(SaveName);
+					WeekViewModel.PatternUpdate("");
+
 				});
 			}
 		}
