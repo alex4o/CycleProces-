@@ -147,7 +147,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 
 		void LoadWeek()
 		{
-			DateTime dt = DateTime.Today.AddDays(1);
+			DateTime dt = DateTime.Today;
 
 			Week = week.Select(res =>
 			{
@@ -234,7 +234,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 			NotifyPropertyChanged("PatternName");
 
-			//Console.WriteLine((long)(DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond));
+			Console.WriteLine((long)(DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond));
 			if ((DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond) == 0)
 			{
 				LoadWeek();
