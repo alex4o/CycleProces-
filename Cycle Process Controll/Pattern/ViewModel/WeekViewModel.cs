@@ -137,7 +137,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 				EndTime += item.Period;
 				Pattern.Add(new PreviewPeriodViewModel(item, model.StartTime, EndTime));
 			}
-			Console.Write("Pattern Updated: {0}\r", Name);
+			Console.WriteLine("Pattern Updated: {0}", Name);
 		}
 
 		void WeekViewModel_PatternRemovedEvent(string Name)
@@ -183,7 +183,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 								LPT.LPT.Off();
 								
 							}
-							Console.WriteLine("End Short");
+                            Console.WriteLine("[{0}] End Short", model.Name);
 						}
 						
 						//Console.WriteLine((int)(model._period.Period - DateTime.Now.TimeOfDay).TotalSeconds);
@@ -195,21 +195,21 @@ namespace CycleProcessControll.Pattern.ViewModel
 								LPT.LPT.On(model.EventValue);
 							}
 
-							Console.WriteLine("30 seconds to mars");
+                            Console.WriteLine("[{0}] 30 seconds to mars", model.Name);
 						}
 					}
 					else
 					{
 						LPT.LPT.Off();
 						model = Week[0].Pattern[i];
-						Console.WriteLine("Enter Period");
+                        Console.WriteLine("[{0}] Enter Period ", model.Name);
 						
 						
 						if (model.EventStartTime == Time.Start || model.EventStartTime == Time.All) 
 						{
 							LPT.LPT.On(model.EventValue);
 						}
-						Console.WriteLine("Enter Event");
+                        Console.WriteLine("[{0}] Enter Event", model.Name);
 						//all the time
 					}
 					if ( CurrentHour != i && CurrentHour > Week[0].Pattern.Count - 1) {
@@ -234,7 +234,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 			NotifyPropertyChanged("PatternName");
 
-			Console.WriteLine((long)(DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond));
+			//Console.WriteLine((long)(DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond));
 			if ((DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond) == 0)
 			{
 				LoadWeek();

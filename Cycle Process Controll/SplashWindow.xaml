@@ -1,0 +1,25 @@
+﻿<Window x:Class="CycleProcessControll.SplashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SplashWindow" Height="300" Width="400" WindowStyle="None">
+	<Border BorderBrush="Gray"            
+            BorderThickness="0,0,2,2"
+            CornerRadius="10"
+            Background="Beige">
+		<!-- Create space between shadow and the next border -->
+		<Border BorderBrush="Transparent"
+              BorderThickness="5"
+              CornerRadius="10">
+			<!-- The inner border -->
+			<Border BorderBrush="Black"
+                BorderThickness="1.5"
+                CornerRadius="10">
+				<Grid >
+					<TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Без Усилие" VerticalAlignment="Top" FontSize="36"/>
+					<TextBlock HorizontalAlignment="Left" Height="23" Margin="10,0,0,0" TextWrapping="Wrap" Text="Зареждане" VerticalAlignment="Bottom" Width="120"/>
+				</Grid>
+			</Border>
+		</Border>
+	</Border>
+
+</Window>

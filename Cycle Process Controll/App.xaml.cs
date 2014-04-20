@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CycleProcessControl;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,11 @@ namespace CycleProcessControll
 	/// </summary>
 	public partial class App : Application
 	{
+	
+		public App()
+		{
+          
+
+		}
 	}
 }

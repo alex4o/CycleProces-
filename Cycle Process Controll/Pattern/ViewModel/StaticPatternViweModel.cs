@@ -190,10 +190,13 @@ namespace CycleProcessControll.Pattern.ViewModel
 			}
 			set
 			{
-				current.Name = value.Name;
-				current.Period = value.Period;
-				current.EventStartTime = value.EventStartTime;
-				current.EventValue = value.EventValue;
+                if (value != null)
+                {
+                    current.Name = value.Name;
+                    current.Period = value.Period;
+                    current.EventStartTime = value.EventStartTime;
+                    current.EventValue = value.EventValue;
+                }
 			}
 		}
 

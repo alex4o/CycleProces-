@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,13 @@ namespace CycleProcessControll.Pattern.View
 	{
 		public WeekView()
 		{
+            SplashWindow splash = new SplashWindow();
+
+            splash.Show();
+
 			InitializeComponent();
+
+            splash.Close();
 		}
 	}
 }
