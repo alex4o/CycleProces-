@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CycleProcessControll.Pattern.Model;
+using CycleProcessControl.Pattern.Model;
 using System.ComponentModel;
-namespace CycleProcessControll.Pattern.ViewModel
+namespace CycleProcessControl.Pattern.ViewModel
 {
-	class TimePeriodViewModel : INotifyPropertyChanged
+	class TimePeriodViewModel : BaseViewModel
 	{
 		#region Fields
 		public TimePeriodModel _period;
@@ -67,16 +67,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 		}
 		#endregion
 
-		#region PropertyChanged
-		public event PropertyChangedEventHandler PropertyChanged;
-		public void NotifyPropertyChanged(string str)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(str));
-			}
-		}
-		#endregion
+
 	}
 
 	class PreviewPeriodViewModel : TimePeriodViewModel

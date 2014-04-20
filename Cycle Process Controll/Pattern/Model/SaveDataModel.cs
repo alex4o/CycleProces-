@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CycleProcessControll.Pattern.Model
+namespace CycleProcessControl.Pattern.Model
 {
 	class SaveDataModel
 	{

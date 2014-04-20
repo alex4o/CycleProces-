@@ -1,4 +1,4 @@
-﻿<Window x:Class="CycleProcessControll.SplashWindow"
+﻿<Window x:Class="CycleProcessControl.SplashWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SplashWindow" Height="300" Width="400" WindowStyle="None">

@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CycleProcessControll.Pattern.View
+namespace CycleProcessControl.Pattern.View
 {
 	/// <summary>
 	/// Interaction logic for TimePatternView.xaml

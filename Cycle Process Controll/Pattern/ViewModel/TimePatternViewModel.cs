@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.IO;
-using CycleProcessControll.Pattern.Model;
+using CycleProcessControl.Pattern.Model;
 using System.Threading;
 
-namespace CycleProcessControll.Pattern.ViewModel
+namespace CycleProcessControl.Pattern.ViewModel
 {
 	class TimePatternViewModel : INotifyPropertyChanged
 	{
@@ -55,8 +55,8 @@ namespace CycleProcessControll.Pattern.ViewModel
 		public Command Edit{
 			get {
 				return new Command(() => {
-					CycleProcessControll.Pattern.View.MainWindow StaticView = new CycleProcessControll.Pattern.View.MainWindow();
-					(StaticView.DataContext as CycleProcessControll.Pattern.ViewModel.StaticPatternViweModel).FileOpen(savedata.Name);
+					CycleProcessControl.Pattern.View.MainWindow StaticView = new CycleProcessControl.Pattern.View.MainWindow();
+					(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViweModel).FileOpen(savedata.Name);
 					StaticView.Show();
 					
 				});

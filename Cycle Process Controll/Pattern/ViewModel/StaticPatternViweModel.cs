@@ -7,9 +7,9 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.IO;
-using CycleProcessControll.Pattern.Model;
+using CycleProcessControl.Pattern.Model;
 using System.Threading;
-namespace CycleProcessControll.Pattern.ViewModel
+namespace CycleProcessControl.Pattern.ViewModel
 {
 	class StaticPatternViweModel : INotifyPropertyChanged
 	{

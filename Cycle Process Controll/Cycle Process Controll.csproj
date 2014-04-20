@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="Pattern\Model\SaveDataModel.cs" />
+    <Compile Include="Pattern\ViewModel\BaseViewModel.cs" />
     <Compile Include="Pattern\View\ProtocollChoose.xaml.cs">
       <DependentUpon>ProtocollChoose.xaml</DependentUpon>
     </Compile>

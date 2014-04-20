@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CycleProcessControll
+namespace CycleProcessControl
 {
 	public class ComboBoxTimeItem : ComboBoxItem
 	{

@@ -1,4 +1,4 @@
-﻿using CycleProcessControll.Pattern.Model;
+﻿using CycleProcessControl.Pattern.Model;
 using Newtonsoft.Json;
 using System;
 using System.Windows;
@@ -9,9 +9,9 @@ using System.Threading;
 using System.IO;
 using System.Linq;
 using LPT;
-namespace CycleProcessControll.Pattern.ViewModel
+namespace CycleProcessControl.Pattern.ViewModel
 {
-	class WeekViewModel : INotifyPropertyChanged
+	class WeekViewModel : BaseViewModel
 	{
 		TimePatternViewModel[] week = new TimePatternViewModel[7];
 		public static ObservableCollection<string> files;
@@ -208,6 +208,7 @@ namespace CycleProcessControll.Pattern.ViewModel
 						if (model.EventStartTime == Time.Start || model.EventStartTime == Time.All) 
 						{
 							LPT.LPT.On(model.EventValue);
+
 						}
                         Console.WriteLine("[{0}] Enter Event", model.Name);
 						//all the time

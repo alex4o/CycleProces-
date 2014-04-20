@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace CycleProcessControll.Pattern.Model
+namespace CycleProcessControl.Pattern.Model
 {
 	public class StaticPatternModel
 	{

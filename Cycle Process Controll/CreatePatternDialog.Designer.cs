@@ -1,4 +1,4 @@
-﻿namespace CycleProcessControll
+﻿namespace CycleProcessControl
 {
 	partial class CreatePatternDialog
 	{

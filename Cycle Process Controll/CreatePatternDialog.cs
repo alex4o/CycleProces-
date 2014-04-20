@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-namespace CycleProcessControll
+namespace CycleProcessControl
 {
 	public partial class CreatePatternDialog : Form
 	{
@@ -21,8 +21,8 @@ namespace CycleProcessControll
 			FileStream fs = File.Create("Save\\" + NameBox.Text + ".json");
 			fs.Flush();
 			fs.Dispose();
-			CycleProcessControll.Pattern.View.MainWindow StaticView = new CycleProcessControll.Pattern.View.MainWindow();
-			(StaticView.DataContext as CycleProcessControll.Pattern.ViewModel.StaticPatternViweModel).FileOpen(NameBox.Text);
+			CycleProcessControl.Pattern.View.MainWindow StaticView = new CycleProcessControl.Pattern.View.MainWindow();
+			(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViweModel).FileOpen(NameBox.Text);
 			StaticView.Topmost = true; 
 			this.Close();
 			StaticView.Show();
