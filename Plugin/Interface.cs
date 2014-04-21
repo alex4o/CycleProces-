@@ -9,6 +9,6 @@ namespace Plugin
 	public interface IDBManager
     {
 		void Save(StaticPatternModel SaveData);
-
+        void Connect();
     }
 }

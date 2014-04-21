@@ -37,7 +37,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -101,6 +101,7 @@
       <DependentUpon>CreatePatternDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums.cs" />
+    <Compile Include="IRefresh.cs" />
     <Compile Include="Pattern\Model\SaveDataModel.cs" />
     <Compile Include="Pattern\ViewModel\BaseViewModel.cs" />
     <Compile Include="Pattern\View\ProtocollChoose.xaml.cs">
@@ -122,7 +123,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Pattern\ViewModel\DynamicPatternViewModel.cs" />
-    <Compile Include="Pattern\ViewModel\StaticPatternViweModel.cs" />
+    <Compile Include="Pattern\ViewModel\StaticPatternViewModel.cs" />
     <Compile Include="Pattern\ViewModel\TimePatternViewModel.cs" />
     <Compile Include="Pattern\ViewModel\TimePeriodViewModel.cs" />
     <Compile Include="Pattern\ViewModel\WeekViewModel.cs" />

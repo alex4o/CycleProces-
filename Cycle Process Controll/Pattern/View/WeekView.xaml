@@ -3,28 +3,49 @@
         xmlns:View="CycleProcessControl.Pattern.View"  xmlns:local="clr-namespace:CycleProcessControl.Pattern.View" xmlns:ViewModel="clr-namespace:CycleProcessControl.Pattern.ViewModel" x:Class="CycleProcessControl.Pattern.View.WeekView"
         Title="Week" Height="600" Width="1200">
 
-	<Window.DataContext>
-		<ViewModel:WeekViewModel/>
-	</Window.DataContext>
+	
 	<Grid>
-		
-		<DockPanel LastChildFill="True">
+ 
+        <DockPanel LastChildFill="True">
 
 		<DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC">
 			<StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-					<!--<TextBlock Binding.XmlNamespaceManager="{Binding Path=Current_Element}"/>-->
+					<TextBlock Binding.XmlNamespaceManager="{Binding Path=Current_Element}"/>
 					<Button Content="Добави" Style="{DynamicResource MenuButton}" Command="{Binding AddPeriod}" Width="57"/>
                     <Button Content="Настройки" Style="{DynamicResource MenuButton}" Command="{Binding Settings}" Width="60"/>
                 </StackPanel>
 
-			<TextBlock DockPanel.Dock="Right" Text="{Binding TimeText, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>
+			<TextBlock x:Name="TT" DockPanel.Dock="Right" Text="{Binding TimeText, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>
 		</DockPanel>
             
 			<StackPanel Height="22px" DockPanel.Dock="Bottom" Background="#FFCCCCCC" >
 				<TextBlock Text="{Binding Path=PatternName}"/>
 			</StackPanel>
-            <Rectangle Width="20"  DockPanel.Dock="Left" Height="100" VerticalAlignment="Top" Fill="#96FF0000" Margin="0,0,5,0"/>
-			<Grid>
+            <ItemsControl ItemsSource="{Binding Path=Week}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}" VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+
+                        <StackPanel Orientation="Horizontal">
+                            
+                        </StackPanel>
+
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:TimePatternView Width="200px" Grid.Column="1"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--<Grid>
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="1*"/>
@@ -36,7 +57,7 @@
 				<ColumnDefinition Width="1*"/>
 
 			</Grid.ColumnDefinitions>
-			<local:TimePatternView DataContext="{Binding Week[0], Mode=TwoWay}" />
+			local:TimePatternView DataContext="{Binding Week[0], Mode=TwoWay}" />
 
 				<local:TimePatternView DataContext="{Binding Week[1], Mode=TwoWay}" Grid.Column="1"/>
 				<local:TimePatternView DataContext="{Binding Week[2], Mode=TwoWay}" Grid.Column="2"/>
@@ -44,7 +65,7 @@
 				<local:TimePatternView DataContext="{Binding Week[4], Mode=TwoWay}" Grid.Column="4"/>
 				<local:TimePatternView DataContext="{Binding Week[5], Mode=TwoWay}" Grid.Column="5"/>
 			<local:TimePatternView DataContext="{Binding Week[6]}" Grid.Column="6"/>
-		</Grid>
+		</Grid>-->
 		
 	</DockPanel>
 	</Grid>

@@ -22,7 +22,7 @@ namespace CycleProcessControl
 			fs.Flush();
 			fs.Dispose();
 			CycleProcessControl.Pattern.View.MainWindow StaticView = new CycleProcessControl.Pattern.View.MainWindow();
-			(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViweModel).FileOpen(NameBox.Text);
+			(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViewModel).FileOpen(NameBox.Text);
 			StaticView.Topmost = true; 
 			this.Close();
 			StaticView.Show();

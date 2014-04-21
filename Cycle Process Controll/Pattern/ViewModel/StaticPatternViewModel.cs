@@ -11,12 +11,12 @@ using CycleProcessControl.Pattern.Model;
 using System.Threading;
 namespace CycleProcessControl.Pattern.ViewModel
 {
-	class StaticPatternViweModel : INotifyPropertyChanged
+	class StaticPatternViewModel : INotifyPropertyChanged
 	{
 		StaticPatternModel model = new StaticPatternModel();
 		ObservableCollection<TimePeriodViewModel> patern = new ObservableCollection<TimePeriodViewModel>();
 		TimePeriodViewModel current = new TimePeriodViewModel(new TimePeriodModel("", new TimeSpan(), 0, 0));
-		public StaticPatternViweModel()
+		public StaticPatternViewModel()
 		{
 
 		}

@@ -11,7 +11,7 @@ using System.Linq;
 using LPT;
 namespace CycleProcessControl.Pattern.ViewModel
 {
-	class WeekViewModel : BaseViewModel
+	class WeekViewModel : BaseViewModel,IRefresh
 	{
 		TimePatternViewModel[] week = new TimePatternViewModel[7];
 		public static ObservableCollection<string> files;
@@ -20,7 +20,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 		static Int32 CurrentHour = 0;
 		Timer clock;
 
-		public Command Shit
+		public Command AddPeriod
 		{
 			get
 			{
@@ -34,8 +34,22 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 		}
 
+        public Command Settings
+        {
+            get
+            {
+                return new Command(() =>
+                {
+
+
+                });
+            }
+        }
+
 		public WeekViewModel()
 		{
+
+            // Test for directory existance
 			if (!Directory.Exists("Save"))
 			{
 				Directory.CreateDirectory("Save");
@@ -46,23 +60,31 @@ namespace CycleProcessControl.Pattern.ViewModel
 				Directory.CreateDirectory("Plugins");
 			}
 
-
+            // Load Plugins and Settings
 			Plugin.PluginManager.Load();
 			Load();
 			files = new ObservableCollection<string>(Directory.GetFiles(@"Save\").Select(item => item.Split('\\').Last().Split('.')[0]));
 
+            // Get current day
 			DateTime dt = DateTime.Today;
 
+
+            // Load week
 			week = week.Select(res =>
 			{
 				TimePatternViewModel v = new TimePatternViewModel(dt.ToString("dddd"), save[(int)dt.DayOfWeek], this);dt = dt.AddDays(1);
 				return v;
 			}).ToArray();
-			Thread t = new Thread(() =>
-			{
+
+            // Start The Clock
+			//Thread t = new Thread(() =>
+			//{
 				clock = new Timer(TimerCallback, null, 0, 1000);
-			});
-			t.Start();
+			//});
+			//t.Start();
+
+
+            // Event Subscriptions
 			PatternUpdatedEvent += WeekViewModel_PatternUpdatedEvent;
 			PatternRemovedEvent += WeekViewModel_PatternRemovedEvent;
 		}
@@ -149,13 +171,14 @@ namespace CycleProcessControl.Pattern.ViewModel
 		{
 			DateTime dt = DateTime.Today;
 
-			Week = week.Select(res =>
+			week = week.Select(res =>
 			{
 				TimePatternViewModel v = new TimePatternViewModel(dt.ToString("dddd"), save[(int)dt.DayOfWeek], this);
 				Console.WriteLine("{0}", dt.DayOfWeek);
 				dt = dt.AddDays(1);
 				return v;
 			}).ToArray();
+            NotifyPropertyChanged("Week");
 		}
 
 		public static void changeel()
@@ -167,14 +190,14 @@ namespace CycleProcessControl.Pattern.ViewModel
 		//TimeSpan Start;
 		void TimerCallback(Object state)
 		{
-			
-			TimeText = DateTime.Now.ToString("HH:mm:ss");
-			NotifyPropertyChanged("TimeText");
-			for (int i = CurrentHour;i < Week[0].Pattern.Count;i++)
+
+
+            
+            for (int i = CurrentHour; i < week[0].Pattern.Count; i++)
 			{
-				if (Week[0].Pattern[i].end >= DateTime.Now.TimeOfDay && Week[0].Pattern[i].start <= DateTime.Now.TimeOfDay)
+				if (Week[0].Pattern[i].end >= DateTime.Now.TimeOfDay && week[0].Pattern[i].start <= DateTime.Now.TimeOfDay)
 				{
-					if (model == Week[0].Pattern[i])
+                    if (model == week[0].Pattern[i])
 					{
 						if ((int)(DateTime.Now.TimeOfDay - model.start).TotalSeconds == 30)
 						{
@@ -201,7 +224,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 					else
 					{
 						LPT.LPT.Off();
-						model = Week[0].Pattern[i];
+                        model = week[0].Pattern[i];
                         Console.WriteLine("[{0}] Enter Period ", model.Name);
 						
 						
@@ -213,7 +236,8 @@ namespace CycleProcessControl.Pattern.ViewModel
                         Console.WriteLine("[{0}] Enter Event", model.Name);
 						//all the time
 					}
-					if ( CurrentHour != i && CurrentHour > Week[0].Pattern.Count - 1) {
+                    if (CurrentHour != i && CurrentHour > week[0].Pattern.Count - 1)
+                    {
 						PatternName = "";
 						LPT.LPT.Off();
 					}
@@ -235,7 +259,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 			NotifyPropertyChanged("PatternName");
 
-			//Console.WriteLine((long)(DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond));
+			Console.WriteLine((long)(DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond));
 			if ((DateTime.Now.TimeOfDay.Ticks / TimeSpan.TicksPerSecond) == 0)
 			{
 				LoadWeek();
@@ -244,17 +268,15 @@ namespace CycleProcessControl.Pattern.ViewModel
 
 
 
-		public TimePatternViewModel[] Week
+		public ObservableCollection<TimePatternViewModel> Week
 		{
 			get
 			{
-				return week;
+				return new ObservableCollection<TimePatternViewModel>(week);
 			}
-			set
-			{
-				week = value;
-				NotifyPropertyChanged("Week");
-			}
+            set { 
+            
+            }
 		}
 
 		public String PatternName
@@ -262,10 +284,21 @@ namespace CycleProcessControl.Pattern.ViewModel
 			get;
 			set;
 		}
+
+        string timetext;
 		public String TimeText
 		{
-			get;
-			set;
+            get
+            {
+                return timetext;
+            }
+            set
+            {
+                
+                timetext = value;
+                NotifyPropertyChanged("TimeText");
+                
+            }
 		}
 
 		public delegate void PatternUpdated(String Name);
@@ -287,16 +320,10 @@ namespace CycleProcessControl.Pattern.ViewModel
 			if (handler != null)
 				handler(name);
 		}
-
-		#region PropertyChanged
-		public event PropertyChangedEventHandler PropertyChanged;
-		private void NotifyPropertyChanged(string str)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(str));
-			}
-		}
-		#endregion
-	}
+        public void Refresh()
+        {
+            TimeText = DateTime.Now.ToString("HH:mm:ss");
+            
+        }
+    }
 }

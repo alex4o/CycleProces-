@@ -15,7 +15,10 @@
 			</ObjectDataProvider.MethodParameters>
 		</ObjectDataProvider>
 	</Window.Resources>
-	<Grid>
+    <Window.DataContext>
+        <ViewModel:StaticPatternViewModel/>
+    </Window.DataContext>
+    <Grid>
 		<DockPanel LastChildFill="True">
 
 			<DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC">

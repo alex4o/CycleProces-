@@ -9,12 +9,20 @@ namespace CycleProcessControl.Pattern.ViewModel
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
+
+        private event PropertyChangedEventHandler propertyChangedImpl = delegate { };
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add { this.propertyChangedImpl += value; }
+            remove { this.propertyChangedImpl -= value; }
+
+        }
         public void NotifyPropertyChanged(string str)
         {
-            if (PropertyChanged != null)
+            if (propertyChangedImpl != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(str));
+                propertyChangedImpl(this, new PropertyChangedEventArgs(str));
             }
         }
         #endregion

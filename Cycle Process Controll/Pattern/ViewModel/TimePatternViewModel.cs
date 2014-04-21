@@ -56,7 +56,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 			get {
 				return new Command(() => {
 					CycleProcessControl.Pattern.View.MainWindow StaticView = new CycleProcessControl.Pattern.View.MainWindow();
-					(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViweModel).FileOpen(savedata.Name);
+					(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViewModel).FileOpen(savedata.Name);
 					StaticView.Show();
 					
 				});
@@ -139,15 +139,6 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 			
 		}
-		#region PropertyChanged
-		public event PropertyChangedEventHandler PropertyChanged;
-		private void NotifyPropertyChanged(string str)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(str));
-			}
-		}
-		#endregion
+		
 	}
 }

@@ -1,3 +1,4 @@
+using CycleProcessControl.Pattern.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,14 @@ namespace CycleProcessControl.Pattern.View
 			InitializeComponent();
 
             splash.Close();
+            this.DataContext = new WeekViewModel();
+            CompositionTarget.Rendering += OnRendering;
 		}
-	}
+
+        void OnRendering(object sender, EventArgs e)
+        {
+            //TT.Text = DateTime.Now.ToString("HH:mm:ss");
+            (DataContext as IRefresh).Refresh();
+        }
+    }
 }
