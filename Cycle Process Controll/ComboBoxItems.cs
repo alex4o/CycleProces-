@@ -9,12 +9,23 @@ namespace CycleProcessControl
 {
 	public class ComboBoxTimeItem : ComboBoxItem
 	{
-		public static readonly DependencyProperty Value = DependencyProperty.Register("EventStartTime", typeof(Time), typeof(ComboBoxTimeItem));
-		public Time EventStartTime
+		public static readonly DependencyProperty Value = DependencyProperty.Register("EventStartTime", typeof(EventStartTimeType), typeof(ComboBoxTimeItem));
+		public EventStartTimeType EventStartTime
 		{
-			get { return (Time)GetValue(Value); }
+			get { return (EventStartTimeType)GetValue(Value); }
 			set { SetValue(Value, value); }
 		}
 
 	}
+
+    public class ComboBoxPortTypeItem : ComboBoxItem
+    {
+        public static readonly DependencyProperty Value = DependencyProperty.Register("PortType", typeof(DevicePortType), typeof(ComboBoxTimeItem));
+        public DevicePortType PortType
+        {
+            get { return (DevicePortType)GetValue(Value); }
+            set { SetValue(Value, value); }
+        }
+
+    }
 }

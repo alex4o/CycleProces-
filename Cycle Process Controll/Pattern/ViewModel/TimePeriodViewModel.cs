@@ -41,10 +41,10 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 		}
 
-		public Time EventStartTime {
+		public EventStartTimeType EventStartTime {
 			get
 			{
-				return (Time)_period.EventStartTime;
+				return (EventStartTimeType)_period.EventStartTime;
 			}
 			set
 			{

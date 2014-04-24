@@ -101,17 +101,19 @@
       <DependentUpon>CreatePatternDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="DeviceManager.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="EventStartTimeEnum.cs" />
     <Compile Include="Interface\IRefresh.cs" />
     <Compile Include="Pattern\Model\SaveDataModel.cs" />
     <Compile Include="Pattern\ViewModel\BaseViewModel.cs" />
-    <Compile Include="Pattern\View\DeviceChoose.xaml.cs">
-      <DependentUpon>DeviceChoose.xaml</DependentUpon>
+    <Compile Include="Pattern\ViewModel\DeviceChooseViewModel.cs" />
+    <Compile Include="Pattern\View\DeviceChooseView.xaml.cs">
+      <DependentUpon>DeviceChooseView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PortTypeEnum.cs" />
     <Compile Include="SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pattern\View\DeviceChoose.xaml">
+    <Page Include="Pattern\View\DeviceChooseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

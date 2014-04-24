@@ -5,17 +5,8 @@ using System.Text;
 
 namespace CycleProcessControl
 {
-    class DeviceManager
-    {
-
-
-        void SaveDevices() { 
-        
-        }
-    }
-
-    class Device
-    { 
-    
+    public enum DevicePortType { 
+        USB,
+        LPT
     }
 }

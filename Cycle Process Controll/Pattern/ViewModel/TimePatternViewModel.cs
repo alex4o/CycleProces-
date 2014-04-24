@@ -110,17 +110,17 @@ namespace CycleProcessControl.Pattern.ViewModel
             }
 
             switch (pattern[Current].EventStartTime) { 
-                case Time.All:
+                case EventStartTimeType.All:
 
                     break;
-                case Time.Start:
+                case EventStartTimeType.Start:
                     if ((int)(DateTime.Now.TimeOfDay - pattern[Current].start).TotalSeconds == 30)
                     {
                         //30 seconds from start
                         Console.WriteLine("[{0}] End Short", pattern[Current].Name);
                     }
                     break;
-                case Time.End:
+                case EventStartTimeType.End:
                     if ((int)(pattern[Current].end - DateTime.Now.TimeOfDay).TotalSeconds == 30)
                     {
                         //30 seconds to end

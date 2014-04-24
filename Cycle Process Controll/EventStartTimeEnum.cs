@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CycleProcessControl
 {
-	public enum Time { 
+	public enum EventStartTimeType { 
 		Start,
 		End,
 		All
