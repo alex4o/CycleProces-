@@ -10,13 +10,11 @@ using System.Threading;
 
 namespace CycleProcessControl.Pattern.ViewModel
 {
-	class TimePatternViewModel : INotifyPropertyChanged
+	class TimePatternViewModel : BaseViewModel
 	{
-		//ObservableCollection<string> patterns;
 		ObservableCollection<PreviewPeriodViewModel> pattern;
 		SaveDataModel savedata;
 		WeekViewModel MainViewModel;
-		//public string selectedfile;
 		public TimePatternViewModel(String Day, SaveDataModel savedata, WeekViewModel week)
 		{
 			//patterns = p;
@@ -30,9 +28,18 @@ namespace CycleProcessControl.Pattern.ViewModel
 				pattern = new ObservableCollection<PreviewPeriodViewModel>();
 			}
 			MainViewModel = week;
+            Current = 0;
+            Check();
 
-			
+            pattern.CollectionChanged += pattern_CollectionChanged;
 		}
+
+        void pattern_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset) {
+                Current = 0;
+            }
+        }
 
 		public ObservableCollection<PreviewPeriodViewModel> Pattern
 		{
@@ -52,10 +59,18 @@ namespace CycleProcessControl.Pattern.ViewModel
 			set;
 		}
 
+        public int Current
+        {
+            get; 
+            set;
+        }
+        
+        
+
 		public Command Edit{
 			get {
 				return new Command(() => {
-					CycleProcessControl.Pattern.View.MainWindow StaticView = new CycleProcessControl.Pattern.View.MainWindow();
+					CycleProcessControl.Pattern.View.StaticPaternView StaticView = new CycleProcessControl.Pattern.View.StaticPaternView();
 					(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViewModel).FileOpen(savedata.Name);
 					StaticView.Show();
 					
@@ -76,8 +91,63 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 		}
 
-		private void Load(String Name) {
+        
 
+        public String Check() {
+            TimeSpan CheckTime = DateTime.Now.TimeOfDay;
+
+
+            if (Current == pattern.Count)
+            {
+                return "Няма";
+            }
+            if (pattern[Current].end < CheckTime) {
+                Current++;
+                return Check();
+            }
+            if (pattern.First().start > CheckTime) {
+                return "Няма";
+            }
+
+            switch (pattern[Current].EventStartTime) { 
+                case Time.All:
+
+                    break;
+                case Time.Start:
+                    if ((int)(DateTime.Now.TimeOfDay - pattern[Current].start).TotalSeconds == 30)
+                    {
+                        //30 seconds from start
+                        Console.WriteLine("[{0}] End Short", pattern[Current].Name);
+                    }
+                    break;
+                case Time.End:
+                    if ((int)(pattern[Current].end - DateTime.Now.TimeOfDay).TotalSeconds == 30)
+                    {
+                        //30 seconds to end
+                        Console.WriteLine("[{0}] 30 seconds to mars", pattern[Current].Name);
+                    }
+                    break;
+            }
+
+            if ((int)(DateTime.Now.TimeOfDay - pattern[Current].start).TotalSeconds == 30)
+            {
+                //30 seconds from start
+                Console.WriteLine("[{0}] End Short", pattern[Current].Name);
+            }
+
+            //Console.WriteLine((int)(model._period.Period - DateTime.Now.TimeOfDay).TotalSeconds);
+            if ((int)(pattern[Current].end - DateTime.Now.TimeOfDay).TotalSeconds == 30)
+            {
+                //30 seconds to end
+                Console.WriteLine("[{0}] 30 seconds to mars", pattern[Current].Name);
+            }
+
+
+            return pattern[Current].Name;
+        }
+
+		private void Load(String Name) {
+            Current = 0;
 			if (WeekViewModel.Loaded.ContainsKey(Name))
 			{
 				Pattern = WeekViewModel.Loaded[Name];
@@ -85,16 +155,12 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 
 			StaticPatternModel model = new StaticPatternModel();
-			if (File.Exists(@"Save\" + Name + ".json")) {
-				
-			
-			
+			if (File.Exists(@"Save\" + Name + ".json")) {			
 				using (StreamReader sr = new StreamReader(@"Save\" + Name + ".json"))
 				{
 					String Object = sr.ReadToEnd();
 					model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
 				}
-			
 			}
 			if (model == null) {
 				Pattern = new ObservableCollection<PreviewPeriodViewModel>();
@@ -122,13 +188,11 @@ namespace CycleProcessControl.Pattern.ViewModel
 		{
 			set
 			{
-
 				if (value == null)
 				{
 					return;
 				}
-
-				
+                
 				savedata.Name = value;
 				MainViewModel.Save();
 				Load(value);		

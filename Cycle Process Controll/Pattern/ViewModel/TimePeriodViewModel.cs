@@ -66,22 +66,25 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 		}
 		#endregion
-
-
 	}
 
 	class PreviewPeriodViewModel : TimePeriodViewModel
-	{
-
-		public TimeSpan start;
+    {
+        #region Fields
+        public TimeSpan start;
 		public TimeSpan end;
-
-		public PreviewPeriodViewModel(TimePeriodModel period, TimeSpan start, TimeSpan end) : base(period)
+        #endregion
+        
+        #region Constructor
+        public PreviewPeriodViewModel(TimePeriodModel period, TimeSpan start, TimeSpan end) : base(period)
 		{
 			this.start = start;
 			this.end = end;
 		}
-		public String Start
+        #endregion
+
+        #region Properties
+        public String Start
 		{
 			get
 			{
@@ -105,6 +108,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 				end = TimeSpan.Parse(value);
 				NotifyPropertyChanged("End");
 			}
-		}
-	}
+        }
+        #endregion
+    }
 }

@@ -16,9 +16,9 @@ namespace CycleProcessControl.Pattern.View
     /// <summary>
     /// Interaction logic for ProtocollChoose.xaml
     /// </summary>
-    public partial class ProtocollChoose : Window
+    public partial class DeviceChoose : Window
     {
-        public ProtocollChoose()
+        public DeviceChoose()
         {
             InitializeComponent();
         }

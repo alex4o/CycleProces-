@@ -146,8 +146,27 @@ namespace CycleProcessControl.Pattern.ViewModel
 					sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(model));
 					sw.Flush();
 					sw.Dispose();
-					WeekViewModel.PatternUpdate(SaveName);
 
+                    ObservableCollection<PreviewPeriodViewModel> Pattern;
+                    if (WeekViewModel.Loaded.ContainsKey(SaveName))
+                    {
+                        Pattern = WeekViewModel.Loaded[SaveName];
+                    }
+                    else
+                    {
+                        Pattern = new ObservableCollection<PreviewPeriodViewModel>();
+                        WeekViewModel.Loaded.Add(SaveName, Pattern);
+                    }
+
+                    TimeSpan EndTime = model.StartTime;
+                    Pattern.Clear();
+                    foreach (TimePeriodModel item in model.Patern)
+                    {
+                        model.StartTime = EndTime;
+                        EndTime += item.Period;
+                        Pattern.Add(new PreviewPeriodViewModel(item, model.StartTime, EndTime));
+                    }
+                    Console.WriteLine("Pattern Updated: {0}", SaveName);
 				});
 			}
 		}

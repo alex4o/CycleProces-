@@ -28,7 +28,7 @@ namespace CycleProcessControl.Pattern.View
 			InitializeComponent();
 
             splash.Close();
-            this.DataContext = new WeekViewModel();
+           // this.DataContext = new WeekViewModel();
             CompositionTarget.Rendering += OnRendering;
 		}
 

@@ -21,7 +21,7 @@ namespace CycleProcessControl
 			FileStream fs = File.Create("Save\\" + NameBox.Text + ".json");
 			fs.Flush();
 			fs.Dispose();
-			CycleProcessControl.Pattern.View.MainWindow StaticView = new CycleProcessControl.Pattern.View.MainWindow();
+			CycleProcessControl.Pattern.View.StaticPaternView StaticView = new CycleProcessControl.Pattern.View.StaticPaternView();
 			(StaticView.DataContext as CycleProcessControl.Pattern.ViewModel.StaticPatternViewModel).FileOpen(NameBox.Text);
 			StaticView.Topmost = true; 
 			this.Close();

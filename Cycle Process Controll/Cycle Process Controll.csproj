@@ -37,7 +37,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -100,17 +100,18 @@
     <Compile Include="CreatePatternDialog.Designer.cs">
       <DependentUpon>CreatePatternDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeviceManager.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="IRefresh.cs" />
+    <Compile Include="Interface\IRefresh.cs" />
     <Compile Include="Pattern\Model\SaveDataModel.cs" />
     <Compile Include="Pattern\ViewModel\BaseViewModel.cs" />
-    <Compile Include="Pattern\View\ProtocollChoose.xaml.cs">
-      <DependentUpon>ProtocollChoose.xaml</DependentUpon>
+    <Compile Include="Pattern\View\DeviceChoose.xaml.cs">
+      <DependentUpon>DeviceChoose.xaml</DependentUpon>
     </Compile>
     <Compile Include="SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pattern\View\ProtocollChoose.xaml">
+    <Page Include="Pattern\View\DeviceChoose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
