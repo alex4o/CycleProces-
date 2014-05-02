@@ -23,7 +23,7 @@ namespace CycleProcessControl.Pattern.View
 	public partial class StaticPaternView : Window
 	{
 		
-		public StaticPaternView()
+		public StaticPaternView() 
 		{
 			InitializeComponent();
 			

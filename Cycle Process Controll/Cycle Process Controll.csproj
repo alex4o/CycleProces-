@@ -188,6 +188,10 @@
       <Project>{8a99941d-b963-4d4e-ad69-18599106eb2f}</Project>
       <Name>Plugin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\USB\USB.csproj">
+      <Project>{5d8135b2-f046-46b8-a971-dd4b7874d8bf}</Project>
+      <Name>USB</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">

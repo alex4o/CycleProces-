@@ -53,16 +53,16 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 		}
 
-		public byte EventValue
+		public int DeviceID
 		{
 			get
 			{
-				return _period.EventVal;
+				return _period.DeviceID;
 			}
 			set
 			{
-				_period.EventVal = value;
-				NotifyPropertyChanged("EventValue");
+				_period.DeviceID = value;
+                NotifyPropertyChanged("DeviceID");
 			}
 		}
 		#endregion

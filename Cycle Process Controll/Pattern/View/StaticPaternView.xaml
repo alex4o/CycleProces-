@@ -6,94 +6,97 @@
 		Width="700px"
 		Height="800px">
 
-	<Window.Resources>
-		<ObjectDataProvider MethodName="GetValues"
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues"
                         ObjectType="{x:Type sys:Enum}"
                         x:Key="AlignmentValues">
-			<ObjectDataProvider.MethodParameters>
-				<x:Type TypeName="HorizontalAlignment" />
-			</ObjectDataProvider.MethodParameters>
-		</ObjectDataProvider>
-	</Window.Resources>
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="HorizontalAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Window.DataContext>
         <ViewModel:StaticPatternViewModel/>
     </Window.DataContext>
     <Grid>
-		<DockPanel LastChildFill="True">
+        <DockPanel LastChildFill="True">
 
-			<DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC">
-				<StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-					<Button Content="Запази" Style="{DynamicResource MenuButton}" Command="{Binding SaveFile}" Width="57"/>
-					<Button Content="Изтрий" Style="{DynamicResource MenuButton}" Command="{Binding RemoveFile}" Width="57"/>
-				</StackPanel>
+            <DockPanel DockPanel.Dock="Top" Background="#FFCCCCCC" Height="21">
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <Button Content="Запази" Style="{DynamicResource MenuButton}" Command="{Binding SaveFile}" Width="57"/>
+                    <Button Content="Изтрий" Style="{DynamicResource MenuButton}" Command="{Binding RemoveFile}" Width="57"/>
+                </StackPanel>
 
-				<TextBlock DockPanel.Dock="Right" Text="{Binding TimeText, IsAsync=True, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>
-			</DockPanel>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="25*"/>
-					<ColumnDefinition Width="25*"/>
+           
+            </DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="346*"/>
+                    <ColumnDefinition Width="281*"/>
+                    
 
-				</Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
 
-				<StackPanel Grid.Column="0">
-					<TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Постоянни:"/></TextBlock>
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-						<Label Width="120" Content="Начало:"/>
-						<TextBox Text="{Binding StartTime, Mode=TwoWay}" Width="150px"/>
-					</StackPanel>
-					<TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Избран елемент:"/></TextBlock>
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-						<Label Width="120" Content="Име:"/>
-						<TextBox Text="{Binding Current.Name, Mode=TwoWay}" Width="150px"/>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-						<Label Width="120" Content="Продължителност:"/>
-						<TextBox Text="{Binding Current.Period, Mode=TwoWay}" Width="150px"/>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-						<Label Width="120" Content="Сигнал:"/>
-						<ComboBox  Width="150px" SelectedValuePath="EventStartTime" SelectedValue="{Binding Path=Current.EventStartTime, Mode=TwoWay}">
-							<local:ComboBoxTimeItem EventStartTime="Start">Само в началото</local:ComboBoxTimeItem>
-							<local:ComboBoxTimeItem EventStartTime="End">Само в края</local:ComboBoxTimeItem>
-							<local:ComboBoxTimeItem EventStartTime="All">През цялото време</local:ComboBoxTimeItem>
-						</ComboBox>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-						<Label Width="120" Content="Контрол:"/>
-						<TextBox  Width="150px" Text="{Binding Path=Current.EventValue,Mode=TwoWay}"/>
-					</StackPanel>
-					
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-						<Button Margin="5" Content="Добави" Command="{Binding AddCommand}"/>
-						<Button Margin="5" Content="Изтрий" Command="{Binding RemoveCommand}"/>
-						<Button Margin="5" Content="Обнови" Command="{Binding UpdateCommand}"/>
-						<Button Margin="5" Content="Нагоре" Command="{Binding MoveUpCommand}"/>
-						<Button Margin="5" Content="Надолу" Command="{Binding MoveDownCommand}"/>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Постоянни:"/></TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                        <Label Width="140" Content="Начало:"/>
+                        <TextBox Text="{Binding StartTime, Mode=TwoWay}" Width="150px"/>
+                    </StackPanel>
+                    <TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Избран елемент:"/></TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                        <Label Width="140" Content="Име:"/>
+                        <TextBox Text="{Binding Current.Name, Mode=TwoWay}" Width="150px"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                        <Label Width="140" Content="Период на цикличност:"/>
+                        <TextBox Text="{Binding Current.Period, Mode=TwoWay}" Width="150px"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                        <Label Width="140" Content="Сигнал:"/>
+                        <ComboBox  Width="150px" SelectedValuePath="EventStartTime" SelectedValue="{Binding Path=Current.EventStartTime, Mode=TwoWay}">
+                            <local:ComboBoxTimeItem EventStartTime="Start">Само в началото</local:ComboBoxTimeItem>
+                            <local:ComboBoxTimeItem EventStartTime="End">Само в края</local:ComboBoxTimeItem>
+                            <local:ComboBoxTimeItem EventStartTime="All">През цялото време</local:ComboBoxTimeItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                        <Label Width="140" Content="Контрол:"/>
+                        <!--	<TextBox  Width="150px" Text="{Binding Path=Current.EventValue,Mode=TwoWay}"/> -->
+                        <ComboBox SelectedValue="{Binding Path=Current.DeviceID, Mode=TwoWay}"  Width="150px" SelectedValuePath="Key" DisplayMemberPath="Value" ItemsSource="{Binding Path=Devices}">
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                        <Button Margin="5" Content="Добави" Command="{Binding AddCommand}"/>
+                        <Button Margin="5" Content="Изтрий" Command="{Binding RemoveCommand}"/>
+                        <Button Margin="5" Content="Обнови" Command="{Binding UpdateCommand}"/>
+                        <Button Margin="5" Content="Нагоре" Command="{Binding MoveUpCommand}"/>
+                        <Button Margin="5" Content="Надолу" Command="{Binding MoveDownCommand}"/>
                         <Button Margin="5" Content="Копие" Command="{Binding MoveDownCommand}"/>
                     </StackPanel>
-				</StackPanel>
-				<ListBox Grid.Column="1" ItemsSource="{Binding Patern, IsAsync=True}" SelectedItem="{Binding Current, IsAsync=False, Mode=OneWayToSource}" SelectedIndex="{Binding SelectedIndex, IsAsync=False, Mode=TwoWay}" BorderBrush="{x:Null}">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<StackPanel>
-								<TextBlock Text="{Binding Name, Mode=TwoWay}"/>
-								<StackPanel Orientation="Horizontal">
-									<TextBlock><Run Text="Продължителност:"/></TextBlock>
-									<TextBlock Text="{Binding Period, Mode=TwoWay}" Margin="5,0,0,0"/>
+                </StackPanel>
+                <ListBox Grid.Column="1" ItemsSource="{Binding Patern, IsAsync=True}" SelectedItem="{Binding Current, IsAsync=False, Mode=OneWayToSource}" SelectedIndex="{Binding SelectedIndex, IsAsync=False, Mode=TwoWay}" BorderBrush="{x:Null}" Grid.ColumnSpan="2">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name, Mode=TwoWay}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock><Run Text="Продължителност:"/></TextBlock>
+                                    <TextBlock Text="{Binding Period, Mode=TwoWay}" Margin="5,0,0,0"/>
 
-								</StackPanel>
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-				<StackPanel Grid.Column="1"/>
-				<StackPanel Grid.Column="3"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Grid.Column="1" Grid.ColumnSpan="2"/>
+                <StackPanel Grid.Column="1" Grid.ColumnSpan="2"/>
 
 
-			</Grid>
-		</DockPanel>
-	</Grid>
+            </Grid>
+        </DockPanel>
+    </Grid>
 </Window>	
 
 

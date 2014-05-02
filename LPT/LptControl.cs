@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LPT
 {
-    public static class LPT
+    public static class LptControl
     {
 		[DllImport("inpout32.dll", EntryPoint = "Out32")]
 		private static extern void Out(short addr, short val);
@@ -21,7 +21,7 @@ namespace LPT
 		[DllImport("inpoutx64.dll", EntryPoint = "Inp32")]
 		private static extern short Inp64(short addr);
 
-		public static void On(byte value) {
+		public static void On(short value) {
 			try
 			{
 				Out(0x278, value);

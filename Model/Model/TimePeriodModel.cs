@@ -8,17 +8,17 @@ namespace CycleProcessControl.Pattern.Model
 {
 	public struct TimePeriodModel
 	{
-		public TimePeriodModel(String Name, TimeSpan Period, int EventStartTime, byte EventVal)
+        public TimePeriodModel(String Name, TimeSpan Period, int EventStartTime, int EventVal)
 		{
 			this.Name = Name;
 			this.Period = Period;
 			this.EventStartTime = EventStartTime;
-			this.EventVal = EventVal;
+            this.DeviceID = EventVal;
 		}
 		
 		public String Name;
 		public TimeSpan Period;
 		public int EventStartTime;
-		public byte EventVal;
+		public int DeviceID;
 	}
 }

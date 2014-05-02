@@ -15,7 +15,7 @@
 			<StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
 					<TextBlock Binding.XmlNamespaceManager="{Binding Path=Current_Element}"/>
 					<Button Content="Добави" Style="{DynamicResource MenuButton}" Command="{Binding AddPeriod}" Width="57"/>
-                    <Button Content="Настройки" Style="{DynamicResource MenuButton}" Command="{Binding Settings}" Width="60"/>
+                    <Button Content="Устройства" Style="{DynamicResource MenuButton}" Command="{Binding Settings}" Width="60"/>
                 </StackPanel>
 
 			<TextBlock x:Name="TT" DockPanel.Dock="Right" Text="{Binding TimeText, Mode=OneWay}"  HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18.667" TextDecorations="{x:Null}" FontFamily="Arial"/>

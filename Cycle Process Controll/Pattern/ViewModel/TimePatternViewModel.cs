@@ -103,46 +103,64 @@ namespace CycleProcessControl.Pattern.ViewModel
             }
             if (pattern[Current].end < CheckTime) {
                 Current++;
+                USB.UsbControl.Off();
+                LPT.LptControl.Off();
                 return Check();
             }
             if (pattern.First().start > CheckTime) {
                 return "Няма";
             }
 
+            Action<short> On;
+            Action Off;
+            if (!DeviceManager.Devices.ContainsKey(pattern[Current].DeviceID)) {
+                goto end;
+            }
+            Device sel = DeviceManager.Devices[pattern[Current].DeviceID];
+            switch (sel.portType) { 
+                case DevicePortType.LPT:
+                    On = LPT.LptControl.On;
+                    Off = LPT.LptControl.Off;
+                    break;
+                case DevicePortType.USB:
+                    On = USB.UsbControl.On;
+                    Off = USB.UsbControl.Off;
+                    break;
+                default:
+                    On = (val) => {
+                        Console.WriteLine("On for: {0}", val);
+                    };
+                    Off = () => {
+                        Console.WriteLine("Off");
+                    };
+                    break;
+            }
+
             switch (pattern[Current].EventStartTime) { 
                 case EventStartTimeType.All:
-
+                    On((short)(1 << sel.value - 1));
                     break;
                 case EventStartTimeType.Start:
+                    On((short)(1 << sel.value - 1));
                     if ((int)(DateTime.Now.TimeOfDay - pattern[Current].start).TotalSeconds == 30)
                     {
-                        //30 seconds from start
+                        Off();   
                         Console.WriteLine("[{0}] End Short", pattern[Current].Name);
                     }
                     break;
                 case EventStartTimeType.End:
                     if ((int)(pattern[Current].end - DateTime.Now.TimeOfDay).TotalSeconds == 30)
                     {
+                        On((short)(1 << sel.value - 1));
                         //30 seconds to end
                         Console.WriteLine("[{0}] 30 seconds to mars", pattern[Current].Name);
                     }
                     break;
             }
 
-            if ((int)(DateTime.Now.TimeOfDay - pattern[Current].start).TotalSeconds == 30)
-            {
-                //30 seconds from start
-                Console.WriteLine("[{0}] End Short", pattern[Current].Name);
-            }
-
-            //Console.WriteLine((int)(model._period.Period - DateTime.Now.TimeOfDay).TotalSeconds);
-            if ((int)(pattern[Current].end - DateTime.Now.TimeOfDay).TotalSeconds == 30)
-            {
-                //30 seconds to end
-                Console.WriteLine("[{0}] 30 seconds to mars", pattern[Current].Name);
-            }
 
 
+            end:
             return pattern[Current].Name;
         }
 

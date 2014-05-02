@@ -29,13 +29,8 @@ namespace CycleProcessControl.Pattern.View
 
             splash.Close();
            // this.DataContext = new WeekViewModel();
-            CompositionTarget.Rendering += OnRendering;
 		}
 
-        void OnRendering(object sender, EventArgs e)
-        {
-            //TT.Text = DateTime.Now.ToString("HH:mm:ss");
-            (DataContext as IRefresh).Refresh();
-        }
+        
     }
 }

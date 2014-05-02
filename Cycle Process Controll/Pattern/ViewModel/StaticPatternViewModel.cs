@@ -66,7 +66,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 					patern[SelectedIndex].Name = current.Name;
 					patern[SelectedIndex].Period = current.Period;
 					patern[SelectedIndex].EventStartTime = current.EventStartTime;
-					patern[SelectedIndex].EventValue = current.EventValue;
+					patern[SelectedIndex].DeviceID = current.DeviceID;
 
 				});
 			}
@@ -159,12 +159,13 @@ namespace CycleProcessControl.Pattern.ViewModel
                     }
 
                     TimeSpan EndTime = model.StartTime;
+                    TimeSpan SomeTime;
                     Pattern.Clear();
                     foreach (TimePeriodModel item in model.Patern)
                     {
-                        model.StartTime = EndTime;
+                        SomeTime = EndTime;
                         EndTime += item.Period;
-                        Pattern.Add(new PreviewPeriodViewModel(item, model.StartTime, EndTime));
+                        Pattern.Add(new PreviewPeriodViewModel(item, SomeTime, EndTime));
                     }
                     Console.WriteLine("Pattern Updated: {0}", SaveName);
 				});
@@ -199,7 +200,14 @@ namespace CycleProcessControl.Pattern.ViewModel
 				patern.Add(new TimePeriodViewModel(item));
 			}
 			NotifyPropertyChanged("");
+           
 		}
+
+        public Dictionary<int, Device> Devices {
+            get {
+                return DeviceManager.Devices;
+            }
+        }
 
 		public TimePeriodViewModel Current
 		{
@@ -214,7 +222,7 @@ namespace CycleProcessControl.Pattern.ViewModel
                     current.Name = value.Name;
                     current.Period = value.Period;
                     current.EventStartTime = value.EventStartTime;
-                    current.EventValue = value.EventValue;
+                    current.DeviceID = value.DeviceID;
                 }
 			}
 		}
