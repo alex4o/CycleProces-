@@ -38,6 +38,7 @@ namespace CycleProcessControl.Pattern.ViewModel
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset) {
                 Current = 0;
+                MainViewModel.Load();
             }
         }
 

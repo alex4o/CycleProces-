@@ -53,7 +53,7 @@ namespace CycleProcessControl.Pattern.ViewModel
            // Plugin.PluginManager.Load();
             DeviceManager.Load();
 			Load();
-			files = new ObservableCollection<string>(Directory.GetFiles(@"Save\").Select(item => item.Split('\\').Last().Split('.')[0]));
+			
 
             // Get current day
 			DateTime dt = DateTime.Today;
@@ -75,12 +75,13 @@ namespace CycleProcessControl.Pattern.ViewModel
 
 
             // Event Subscriptions
-			PatternUpdatedEvent += WeekViewModel_PatternUpdatedEvent;
 			PatternRemovedEvent += WeekViewModel_PatternRemovedEvent;
 		}
 
 		public void Load()
-		{
+        {
+            files = new ObservableCollection<string>(Directory.GetFiles(@"Save\").Select(item => item.Split('\\').Last().Split('.')[0]));
+
 			if (File.Exists("settings.json"))
 			{
 				String obj;
@@ -120,18 +121,6 @@ namespace CycleProcessControl.Pattern.ViewModel
 			PluginSave.Start();
 		}
 
-		void WeekViewModel_PatternUpdatedEvent(string Name)
-		{
-			
-			
-			StaticPatternModel model = new StaticPatternModel();
-			using (StreamReader sr = new StreamReader(@"Save\" + Name + ".bin"))
-			{
-				String Object = sr.ReadToEnd();
-				model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
-			}
-			
-		}
 
 		void WeekViewModel_PatternRemovedEvent(string Name)
 		{
