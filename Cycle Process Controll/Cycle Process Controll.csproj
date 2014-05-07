@@ -103,6 +103,7 @@
     <Compile Include="DeviceManager.cs" />
     <Compile Include="EventStartTimeEnum.cs" />
     <Compile Include="Interface\IRefresh.cs" />
+    <Compile Include="PatternSave.cs" />
     <Compile Include="Pattern\Model\SaveDataModel.cs" />
     <Compile Include="Pattern\ViewModel\BaseViewModel.cs" />
     <Compile Include="Pattern\ViewModel\DeviceChooseViewModel.cs" />

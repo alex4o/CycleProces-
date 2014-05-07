@@ -15,7 +15,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 	{
 		StaticPatternModel model = new StaticPatternModel();
 		ObservableCollection<TimePeriodViewModel> patern = new ObservableCollection<TimePeriodViewModel>();
-		TimePeriodViewModel current = new TimePeriodViewModel(new TimePeriodModel("", new TimeSpan(), 0, 0));
+		TimePeriodViewModel current = new TimePeriodViewModel(new TimePeriodModel("", new TimeSpan(), 0, 0, 15));
 		public StaticPatternViewModel()
 		{
 
@@ -52,7 +52,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 			{
 				return new Command(() =>
 				{
-					patern.Add(new TimePeriodViewModel(new TimePeriodModel("Period", new TimeSpan(0, 0, 0), 0, 0)));
+					patern.Add(new TimePeriodViewModel(new TimePeriodModel("Period", new TimeSpan(0, 0, 0), 0, 0, 15)));
 				});
 			}
 		}
@@ -67,7 +67,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 					patern[SelectedIndex].Period = current.Period;
 					patern[SelectedIndex].EventStartTime = current.EventStartTime;
 					patern[SelectedIndex].DeviceID = current.DeviceID;
-
+                    patern[SelectedIndex].WorkPeriod = current.WorkPeriod;
 				});
 			}
 		}
@@ -129,6 +129,14 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 		}
 
+        public Command CopyCommand
+        {
+            get {
+                return new Command(() => {
+                    Patern.Add(Patern[SelectedIndex]);
+                });
+            }
+        }
 		public Command SaveFile
 		{
 			get
@@ -141,11 +149,8 @@ namespace CycleProcessControl.Pattern.ViewModel
 						model.Patern.Add(item._period);
 					}
 
-					StreamWriter sw = new StreamWriter(@"Save\" + SaveName + ".json");
+                    PatternSave.Save(@"Save\" + SaveName + ".bin", model);
 
-					sw.Write(Newtonsoft.Json.JsonConvert.SerializeObject(model));
-					sw.Flush();
-					sw.Dispose();
 
                     ObservableCollection<PreviewPeriodViewModel> Pattern;
                     if (WeekViewModel.Loaded.ContainsKey(SaveName))
@@ -161,8 +166,10 @@ namespace CycleProcessControl.Pattern.ViewModel
                     TimeSpan EndTime = model.StartTime;
                     TimeSpan SomeTime;
                     Pattern.Clear();
+                   
                     foreach (TimePeriodModel item in model.Patern)
                     {
+
                         SomeTime = EndTime;
                         EndTime += item.Period;
                         Pattern.Add(new PreviewPeriodViewModel(item, SomeTime, EndTime));
@@ -182,10 +189,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 			this.SaveName = Name;
 
-			StreamReader sr = new StreamReader(@"Save\" + SaveName + ".json");
-			String Object = sr.ReadToEnd();
-			sr.Dispose();
-			StaticPatternModel tmodel = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
+            StaticPatternModel tmodel = PatternSave.Load(@"Save\" + SaveName + ".bin");
 			if (tmodel == null)
 			{
 				NotifyPropertyChanged("");
@@ -195,9 +199,14 @@ namespace CycleProcessControl.Pattern.ViewModel
 
 
 			Patern.Clear();
+            Dictionary<TimePeriodModel, TimePeriodViewModel> cach = new Dictionary<TimePeriodModel, TimePeriodViewModel>();
 			foreach (TimePeriodModel item in model.Patern)
 			{
-				patern.Add(new TimePeriodViewModel(item));
+                if (!cach.ContainsKey(item))
+                {
+                    cach.Add(item, new TimePeriodViewModel(item));
+                }
+                patern.Add(cach[item]);
 			}
 			NotifyPropertyChanged("");
            
@@ -214,7 +223,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 			get
 			{
 				return current;
-			}
+			} 
 			set
 			{
                 if (value != null)
@@ -223,6 +232,7 @@ namespace CycleProcessControl.Pattern.ViewModel
                     current.Period = value.Period;
                     current.EventStartTime = value.EventStartTime;
                     current.DeviceID = value.DeviceID;
+                    current.WorkPeriod = value.WorkPeriod;
                 }
 			}
 		}

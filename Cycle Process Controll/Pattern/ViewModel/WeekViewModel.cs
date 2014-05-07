@@ -50,8 +50,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 
 		public WeekViewModel()
 		{
-            // Load Settings
-            Plugin.PluginManager.Load();
+           // Plugin.PluginManager.Load();
             DeviceManager.Load();
 			Load();
 			files = new ObservableCollection<string>(Directory.GetFiles(@"Save\").Select(item => item.Split('\\').Last().Split('.')[0]));

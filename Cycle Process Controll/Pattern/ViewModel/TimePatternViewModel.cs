@@ -141,15 +141,19 @@ namespace CycleProcessControl.Pattern.ViewModel
                     On((short)(1 << sel.value - 1));
                     break;
                 case EventStartTimeType.Start:
-                    On((short)(1 << sel.value - 1));
-                    if ((int)(DateTime.Now.TimeOfDay - pattern[Current].start).TotalSeconds == 30)
+
+                    if ((int)(DateTime.Now.TimeOfDay - pattern[Current].start).TotalSeconds >= pattern[Current].WorkPeriod)
                     {
-                        Off();   
-                        Console.WriteLine("[{0}] End Short", pattern[Current].Name);
+                        Off();
+                        //Console.WriteLine("[{0}] End Short", pattern[Current].Name);
+                    }
+                    else {
+
+                        On((short)(1 << sel.value - 1));
                     }
                     break;
                 case EventStartTimeType.End:
-                    if ((int)(pattern[Current].end - DateTime.Now.TimeOfDay).TotalSeconds == 30)
+                    if ((int)(pattern[Current].end - DateTime.Now.TimeOfDay).TotalSeconds == pattern[Current].WorkPeriod)
                     {
                         On((short)(1 << sel.value - 1));
                         //30 seconds to end
@@ -160,7 +164,8 @@ namespace CycleProcessControl.Pattern.ViewModel
 
 
 
-            end:
+        end:
+            Console.WriteLine(pattern[Current].Name);
             return pattern[Current].Name;
         }
 
@@ -173,12 +178,8 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 
 			StaticPatternModel model = new StaticPatternModel();
-			if (File.Exists(@"Save\" + Name + ".json")) {			
-				using (StreamReader sr = new StreamReader(@"Save\" + Name + ".json"))
-				{
-					String Object = sr.ReadToEnd();
-					model = Newtonsoft.Json.JsonConvert.DeserializeObject<StaticPatternModel>(Object);
-				}
+			if (File.Exists(@"Save\" + Name + ".bin")) {
+                model = PatternSave.Load(@"Save\" + Name + ".bin");
 			}
 			if (model == null) {
 				Pattern = new ObservableCollection<PreviewPeriodViewModel>();

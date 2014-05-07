@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace CycleProcessControl.Pattern.Model
 {
+    [Serializable]
 	public class StaticPatternModel
 	{
 		

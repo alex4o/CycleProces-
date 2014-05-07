@@ -18,7 +18,7 @@ namespace CycleProcessControl
 
 		private void SaveButton_Click(object sender, EventArgs e)
 		{
-			FileStream fs = File.Create("Save\\" + NameBox.Text + ".json");
+			FileStream fs = File.Create("Save\\" + NameBox.Text + ".bin");
 			fs.Flush();
 			fs.Dispose();
 			CycleProcessControl.Pattern.View.StaticPaternView StaticView = new CycleProcessControl.Pattern.View.StaticPaternView();

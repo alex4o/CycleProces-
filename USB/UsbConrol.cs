@@ -21,11 +21,14 @@ namespace USB
 
         public static void On(short value)
         {
+            if (devices.Length == 0) return;
             port.SetRelayStatus(devices[0], 0, (byte)(value & 255));
         }
         public static void Off()
         {
+            if (devices.Length == 0) return;
             port.SetRelayStatus(devices[0], 0, 0x0);
+            
         }
     }
 }

@@ -53,7 +53,10 @@ namespace CycleProcessControl
             
             IFormatter formater = new BinaryFormatter();
             using (FileStream file = new FileStream("DevicesList.bin", FileMode.OpenOrCreate))
+            
             {
+
+                if (file.Length == 0) return;
                 Devices = (Dictionary<Int32, Device>)formater.Deserialize(file);
             }
         }

@@ -65,6 +65,19 @@ namespace CycleProcessControl.Pattern.ViewModel
                 NotifyPropertyChanged("DeviceID");
 			}
 		}
+
+        public int WorkPeriod
+        {
+            get
+            {
+                return _period.WorkPeriod;
+            }
+            set
+            {
+                _period.WorkPeriod = value;
+                NotifyPropertyChanged("WorkPeriod");
+            }
+        }
 		#endregion
 	}
 
