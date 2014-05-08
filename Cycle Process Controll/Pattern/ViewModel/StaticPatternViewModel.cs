@@ -9,6 +9,7 @@ using System.Dynamic;
 using System.IO;
 using CycleProcessControl.Pattern.Model;
 using System.Threading;
+using System.Windows;
 namespace CycleProcessControl.Pattern.ViewModel
 {
 	class StaticPatternViewModel : INotifyPropertyChanged
@@ -123,7 +124,7 @@ namespace CycleProcessControl.Pattern.ViewModel
 				return new Command(() =>
 				{
 					File.Delete(@"Save\" + SaveName + ".json");
-					WeekViewModel.PatternUpdate("");
+					WeekViewModel.PatternRemove("");
 
 				});
 			}
@@ -233,6 +234,13 @@ namespace CycleProcessControl.Pattern.ViewModel
                     current.EventStartTime = value.EventStartTime;
                     current.DeviceID = value.DeviceID;
                     current.WorkPeriod = value.WorkPeriod;
+                    if (value.EventStartTime == EventStartTimeType.All)
+                    {
+                        SecondVis = Visibility.Collapsed;
+                    }
+                    else {
+                        SecondVis = Visibility.Visible;
+                    }
                 }
 			}
 		}
@@ -245,8 +253,39 @@ namespace CycleProcessControl.Pattern.ViewModel
 			}
 		}
 
+        private Visibility vis;
+        public Visibility SecondVis {
+            get {
+                return vis;
+            }
 
+            set {
+                vis = value;
+                NotifyPropertyChanged("SecondVis");
+            }
+        }
 
+        public EventStartTimeType EventStartTime
+        {
+            get
+            {
+                return Current.EventStartTime;
+
+            }
+            set
+            {
+                Current.EventStartTime = value;
+                if (value == EventStartTimeType.All)
+                {
+                    SecondVis = Visibility.Collapsed;
+                }
+                else
+                {
+                    SecondVis = Visibility.Visible;
+                }
+                NotifyPropertyChanged("EventStartTime");
+            }
+        }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		private void NotifyPropertyChanged(string str)

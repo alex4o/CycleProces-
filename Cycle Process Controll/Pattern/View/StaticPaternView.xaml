@@ -27,8 +27,14 @@
                     <Button Content="Изтрий" Style="{DynamicResource MenuButton}" Command="{Binding RemoveFile}" Width="57"/>
                 </StackPanel>
 
-           
+                
+
             </DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Label Content="Начало на графика за деня (чч:мм):" FontSize="18"/>
+                <TextBox Text="{Binding StartTime, Mode=TwoWay}" FontSize="18" Width="107" />
+            </StackPanel>
+            <TextBlock  DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" ><Run Text="Модули на работа:" Foreground="Black" FontWeight="Normal" FontSize="14"/></TextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="346*"/>
@@ -38,34 +44,30 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Постоянни:"/></TextBlock>
+
+                    
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-                        <Label Width="140" Content="Начало:"/>
-                        <TextBox Text="{Binding StartTime, Mode=TwoWay}" Width="150px"/>
-                    </StackPanel>
-                    <TextBlock Foreground="#FF999999" FontWeight="Bold"><Run Text="Избран елемент:"/></TextBlock>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-                        <Label Width="140" Content="Име:"/>
+                        <Label Width="220" Content="Име:"/>
                         <TextBox Text="{Binding Current.Name, Mode=TwoWay}" Width="150px"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-                        <Label Width="140" Content="Период на цикличност:"/>
+                        <Label Width="220" Content="Продължителност на модула (чч:мм):"/>
                         <TextBox Text="{Binding Current.Period, Mode=TwoWay}" Width="150px"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-                        <Label Width="140" Content="Период на работа:"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding Path=SecondVis}"   Margin="0,5,0,0">
+                        <Label Width="220" Content="Период на работа (секунди): "/>
                         <TextBox Text="{Binding Current.WorkPeriod, Mode=TwoWay}" Width="150px"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-                        <Label Width="140" Content="Сигнал:"/>
-                        <ComboBox  Width="150px" SelectedValuePath="EventStartTime" SelectedValue="{Binding Path=Current.EventStartTime, Mode=TwoWay}">
+                        <Label Width="220" Content="Сигнал:"/>
+                        <ComboBox  Width="150px" SelectedValuePath="EventStartTime" SelectedValue="{Binding Path=EventStartTime, Mode=TwoWay}">
                             <local:ComboBoxTimeItem EventStartTime="Start">Само в началото</local:ComboBoxTimeItem>
                             <local:ComboBoxTimeItem EventStartTime="End">Само в края</local:ComboBoxTimeItem>
                             <local:ComboBoxTimeItem EventStartTime="All">През цялото време</local:ComboBoxTimeItem>
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-                        <Label Width="140" Content="Контрол:"/>
+                        <Label Width="220" Content="Устройство:"/>
                         <!--	<TextBox  Width="150px" Text="{Binding Path=Current.EventValue,Mode=TwoWay}"/> -->
                         <ComboBox SelectedValue="{Binding Path=Current.DeviceID, Mode=TwoWay}"  Width="150px" SelectedValuePath="Key" DisplayMemberPath="Value" ItemsSource="{Binding Path=Devices}">
                         </ComboBox>
